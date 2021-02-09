@@ -48,6 +48,7 @@ class bot:
 #make a new bot object ()
 myBot = bot(apiKey, apiSecret, apiPassphrase)
 
+print(myBot)
 #myBot.purchase(5, 'BTC')
 #myBot.marketBuy(1)
 #myBot.marketBuy(1)
