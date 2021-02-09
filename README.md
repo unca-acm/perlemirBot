@@ -56,6 +56,10 @@ Libraries needed:
 TBD
 
 
+
+## Notes on Usage
+-Deposits and purchases both have a \$10 minimum 
+
 ## Licensing
 
 This project will be published under the MIT license
