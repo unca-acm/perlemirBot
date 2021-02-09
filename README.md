@@ -12,6 +12,11 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 
 This project is in its infancy. Stay tuned.
 
+## Configuration
+
+To use, add your Coinbase Pro API credentials to the apiconfig.py file
+
+
 ## Related 
 
 We have a webdev team creating a front end dashboard, in addition to a team creating an internal API.
