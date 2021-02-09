@@ -1,12 +1,15 @@
 import cbpro
+import json
+import apiconfig as cfg
+
 print('The taxation of trade routes to outlaying star systems is in dispute.')
 
-API_KEY = 'xxxxxxxxxxxxxxxxx'
-API_SECRET = 'xxxxxxxxxxxxxxxxxxxx'
-API_PASSPHRASE ='xxxx'
+#get API info from config file
+apiKey = cfg.api['API_KEY']
+apiSecret = cfg.api['API_SECRET']
+apiPassphrase =cfg.api['API_PASSPHRASE']
 
-
-#bot object type
+#bot object type definition
 class bot:
     'Object for api client bot'
     #constructor
@@ -15,25 +18,22 @@ class bot:
         self.apisecret = apisecret
         self.apipassphrase = apipassphrase
         self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase)
-    #class variables
-    #apikey= 'api_key_input'
-    #apisecret = 'api_secret_input'
-    #apipassphrase = 'api_passphrase_input'
 
 
     #Instance Methods
 
-    #getters and setters
+    #this is essentially our toString for the object.
+    def __str__(self):
+        return f"this is string format. The api key for this bot client is{self.apikey}"
+
+    #Getters and Setters
     def setApikey(self, apikey):
             self.apikey = apikey
 
     def getApikey(self, apikey):
             return self.apikey
 
-    #this is essentially our toString for the object.
-    def __str__(self):
-        return f"this is string format. The api key for this bot client is{self.apikey}"
-
+    #Actions
     #make purchase
     def purchase(self, amount, currency):
         print('purchase made so coin much wow')
@@ -43,15 +43,14 @@ class bot:
                                           side='buy',
                                           funds=USDValue) #could also use "size" to specify BTC amount                  s
         print(details)
-        return f"Succesfully purchased {USDValue} in BTC"
 
 
-#make a new bot object (will receive these params as args)
-myBot = bot(API_KEY, API_SECRET, API_PASSPHRASE)
+#make a new bot object ()
+myBot = bot(apiKey, apiSecret, apiPassphrase)
 
-myBot.purchase(5, 'BTC')
-myBot.marketBuy(1)
-myBot.marketBuy(1)
+#myBot.purchase(5, 'BTC')
+#myBot.marketBuy(1)
+#myBot.marketBuy(1)
 
 
 #apiClient = cbpro.AuthenticatedClient(API_KEY, API_SECRET,API_PASSPHRASE)
