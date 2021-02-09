@@ -13,9 +13,9 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 This project is in its infancy. Stay tuned.
 
 ##Project TODO
-- [ ] Create header file for all imports
-- [ ] Research callbacks / periodic executions 
-- [ ] bot class object getters:
+- [ ] Create header file for all imports ELIAS
+- [ ] Research callbacks / periodic executions ALEX
+- [ ] bot class object getters: ALAN & ELIAS
   -[ ] Account ID
   -[ ] primary funding account
   -[ ] API privileges 
