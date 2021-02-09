@@ -37,6 +37,7 @@ class bot:
     #make purchase
     def purchase(self, amount, currency):
         print('purchase made so coin much wow')
+        print( f'in theory you just purchased {amount} worth of {currency}')
 
     def marketBuy(self, USDValue):
         details = self.apiClient.place_market_order(product_id='BTC-USD',
@@ -47,7 +48,7 @@ class bot:
 
 #make a new bot object ()
 myBot = bot(apiKey, apiSecret, apiPassphrase)
-
+myBot.purchase(5, 'BTC')
 print(myBot)
 #myBot.purchase(5, 'BTC')
 #myBot.marketBuy(1)
