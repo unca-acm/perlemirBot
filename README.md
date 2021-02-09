@@ -12,6 +12,27 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 
 This project is in its infancy. Stay tuned.
 
+##Project TODO
+- [ ] Create header file for all imports
+- [ ] Research callbacks / periodic executions 
+- [ ] bot class object getters:
+  -[ ] Account ID
+  -[ ] primary funding account
+  -[ ] API privileges 
+  -[ ] Wallets
+- [ ] bot class object Setters:
+  -[ ] ?
+- [ ] bot class object: buy/sell
+- [ ] bot class object: json writing/reading (saving and reading transaction ID data)
+ -[ ] determine data/file structure for storing json info
+- [ ] automated deposit script
+- [ ] DCA automated buys script
+- [ ] research constant price feeds for active trading (websocket?)
+- [ ] grid trading script?
+- [ ] EMA/SMA script?
+
+
+
 ## Configuration
 
 To use, add your Coinbase Pro API credentials to the apiconfig.py file
