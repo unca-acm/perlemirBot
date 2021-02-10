@@ -16,10 +16,11 @@ This project is in its infancy. Stay tuned.
 - [ ] Create header file for all imports ELIAS
 - [ ] Research callbacks / periodic executions ALEX
 - [ ] bot class object getters: ALAN & ELIAS
-  -[ ] Account ID
-  -[ ] primary funding account
-  -[ ] API privileges 
-  -[ ] Wallets
+  
+    -[ ] Account ID
+    -[ ] primary funding account
+    -[ ] API privileges 
+    -[ ] Wallets
 - [ ] bot class object Setters:
   -[ ] ?
 - [ ] bot class object: buy/sell
