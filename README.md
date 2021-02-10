@@ -18,7 +18,6 @@ This project is in its infancy. Stay tuned.
 - [ ] bot class object getters: ALAN & ELIAS
   
     -[ ] Account ID
-     
     -[ ] primary funding account
      
     -[ ] API privileges 
