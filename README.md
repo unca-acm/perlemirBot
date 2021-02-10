@@ -18,11 +18,14 @@ This project is in its infancy. Stay tuned.
 - [ ] bot class object getters: ALAN & ELIAS
   
     -[ ] Account ID
+     
     -[ ] primary funding account
+     
     -[ ] API privileges 
+     
     -[ ] Wallets
 - [ ] bot class object Setters:
-  -[ ] ?
+      -[ ] ?
 - [ ] bot class object: buy/sell
 - [ ] bot class object: json writing/reading (saving and reading transaction ID data)
  -[ ] determine data/file structure for storing json info
