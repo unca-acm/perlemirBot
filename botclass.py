@@ -4,11 +4,15 @@ import json
 class bot:
     'Object for api client bot'
     #constructor
-    def __init__(self, apikey, apisecret, apipassphrase):
+    def __init__(self, apikey, apisecret, apipassphrase, sandbox):
         self.apikey = apikey
         self.apisecret = apisecret
         self.apipassphrase = apipassphrase
-        self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase)
+        if sandbox=='true':
+            self.api_url='https://api-public.sandbox.pro.coinbase.com/'
+        else:
+            self.api_url= 'https://api.pro.coinbase.com'
+        self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase, self.api_url)
 
     #Instance Methods
 

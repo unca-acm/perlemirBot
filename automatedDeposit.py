@@ -18,8 +18,8 @@ numArgs = len(sys.argv)
 if numArgs < 3:
     print("Not enough arguments, must enter USD amount to deposit and frequency")
     exit()
-amount = sys.argv[1]
-if amount <10
+amount = int(sys.argv[1])
+if  amount <10:
     print("Error: Minimum deposit is $10")
     exit()
 
@@ -29,15 +29,17 @@ if amount <10
 apiKey = cfg.api['API_KEY']
 apiSecret = cfg.api['API_SECRET']
 apiPassphrase =cfg.api['API_PASSPHRASE']
+sandbox = cfg.api['SANDBOX']
 
 #make a new bot object
-myBot = botclass.bot(apiKey, apiSecret, apiPassphrase)
+myBot = botclass.bot(apiKey, apiSecret, apiPassphrase, sandbox)
 print(myBot)
 
 #get primary payment method ID
 paymentMethods = (myBot.apiClient.get_payment_methods())
+#print(paymentMethods)
 primaryMethodID = paymentMethods[0]['id']
-print(primaryMethodID)
+print(f'primary method id is {primaryMethodID}')
 
 #TODO: insert logic for frequency
 

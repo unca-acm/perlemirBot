@@ -25,8 +25,8 @@ This project is in its infancy. Stay tuned.
      
     -[ ] Wallets
 - [ ] bot class object Setters:
-  
-      -[ ] ?
+     
+  -[ ] TBD
   
 - [ ] bot class object: buy/sell
 - [ ] bot class object: json writing/reading (saving and reading transaction ID data)
@@ -43,6 +43,10 @@ This project is in its infancy. Stay tuned.
 
 To use, add your Coinbase Pro API credentials to the apiconfig.py file
 
+To use in sandbox mode (either for development or for fun), change the "SANDBOX" flag in apiconfig.py to "true". If "SANDBOX" is false, bot will be live on the coinbase server.
+
+For sandbox mode you will need to make a new API key at:
+https://public.sandbox.pro.coinbase.com/
 
 ## Related 
 
