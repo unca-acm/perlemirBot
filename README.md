@@ -77,5 +77,5 @@ This project will be published under the MIT license
 
 
 
-<br><br><small>May the force be with you</small>
+<br><br><small>Disclaimer: Cryptocurrency markets are very volatile and there is risk involved with investing. This project is intended for educational purposes and/or for personal use. Not financial advice. May the force be with you</small>
 
