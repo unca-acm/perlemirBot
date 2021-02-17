@@ -4,6 +4,8 @@ import cbpro
 import json
 import botclass
 import sys
+import schedule
+
 
 #USAGE: automatedDeposit.py USDamount Frequency
 
@@ -12,6 +14,23 @@ import sys
 #    receive frequency of deposit
 #    make bot object
 #    make it work
+
+
+apiKey = cfg.api['API_KEY']
+apiSecret = cfg.api['API_SECRET']
+apiPassphrase =cfg.api['API_PASSPHRASE']
+sandbox = cfg.api['SANDBOX']
+
+
+#trying to use inheritance here
+class automatedDeposit(botclass):
+    def __init__(self, frequency, amount):
+        super().init(apikey, apisecret, apipassphrase, sandbox)
+        #get the variables from config here?
+        self.frequency = frequency
+        self.amount=amount
+        #TODO: add check here to make sure amount is > 10
+
 
 #check arguments
 numArgs = len(sys.argv)
