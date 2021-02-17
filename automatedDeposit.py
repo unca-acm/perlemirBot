@@ -16,33 +16,18 @@ import schedule
 #    make it work
 
 
-apiKey = cfg.api['API_KEY']
-apiSecret = cfg.api['API_SECRET']
-apiPassphrase =cfg.api['API_PASSPHRASE']
-sandbox = cfg.api['SANDBOX']
-
-
 #trying to use inheritance here
 class automatedDeposit(botclass):
     def __init__(self, frequency, amount):
-        super().init(apikey, apisecret, apipassphrase, sandbox)
-        #get the variables from config here?
+        apiKey = cfg.api['API_KEY']
+        apiSecret = cfg.api['API_SECRET']
+        apiPassphrase = cfg.api['API_PASSPHRASE']
+        sandbox = cfg.api['SANDBOX']
+        super().init(apiKey, apiSecret, apiPassphrase, sandbox)
         self.frequency = frequency
         self.amount=amount
         #TODO: add check here to make sure amount is > 10
 
-
-#check arguments
-numArgs = len(sys.argv)
-if numArgs < 3:
-    print("Not enough arguments, must enter USD amount to deposit and frequency")
-    exit()
-amount = int(sys.argv[1])
-if  amount <10:
-    print("Error: Minimum deposit is $10")
-    exit()
-
-#TODO: use sys.aargv[2] for frequency
 
 #get API info from config file
 apiKey = cfg.api['API_KEY']
