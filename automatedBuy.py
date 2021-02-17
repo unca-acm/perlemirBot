@@ -8,3 +8,4 @@ pseudocode
     create bot  (inherit bot from botclass?)
     make the buys on set schedule
     Record information about transaction into a JSON - either just the transaction ID, or more info (entire return statement) - TBD
+
