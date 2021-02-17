@@ -1,5 +1,6 @@
 import cbpro
 import json
+
 #bot object type definition
 class bot:
     'Object for api client bot'

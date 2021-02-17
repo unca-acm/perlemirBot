@@ -1,5 +1,19 @@
 {
     "market_buys": [
-
+        {
+            "message": "funds is too small. Minimum size is 5.00000000"
+        },
+        {
+            "message": "funds is too small. Minimum size is 10.00000000"
+        },
+        {
+            "message": "Insufficient funds"
+        },
+        {
+            "message": "Invalid API Key"
+        },
+        {
+            "message": "Insufficient funds"
+        }
     ]
 }

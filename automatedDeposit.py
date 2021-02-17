@@ -6,7 +6,6 @@ import botclass
 import sys
 import schedule
 
-
 #USAGE: automatedDeposit.py USDamount Frequency
 
 #pseudocode:
@@ -14,7 +13,6 @@ import schedule
 #    receive frequency of deposit
 #    make bot object
 #    make it work
-
 
 #trying to use inheritance here
 class automatedDeposit(botclass):
