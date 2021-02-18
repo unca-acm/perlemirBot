@@ -28,7 +28,7 @@ class bot:
             self.apipass = apipass
 
     #perhaps having this method is bad security, remote later?
-    def getApikey(self, apikey):
+    def getApikey(self):
             return self.apikey
 
     def getPaymentMethod(self):

@@ -22,7 +22,7 @@ class automatedDeposit(bot):
         apiSecret = cfg.api['API_SECRET']
         apiPassphrase = cfg.api['API_PASSPHRASE']
         sandbox = cfg.api['SANDBOX']
-        super().init(apiKey, apiSecret, apiPassphrase, sandbox)
+        super().__init__(apiKey, apiSecret, apiPassphrase, sandbox)
         self.frequency = frequency
         self.amount = amount
         #TODO: add check here to make sure amount is > 10
@@ -44,6 +44,6 @@ print(f'primary method id is {primaryMethodID}')
 #TODO: insert logic for frequency
 
 #this does the actual deposit:
-response = myBot.apiClient.deposit(amount, 'USD', primaryMethodID)
+response = myBot.apiClient.deposit(10, 'USD', primaryMethodID)
 print(response)
 #TODO: save response in JSON
