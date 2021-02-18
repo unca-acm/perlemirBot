@@ -36,6 +36,7 @@ print(myBot)
 
 #get primary payment method ID
 paymentMethods = (myBot.apiClient.get_payment_methods())
+
 #print(paymentMethods)
 primaryMethodID = paymentMethods[0]['id']
 print(f'primary method id is {primaryMethodID}')

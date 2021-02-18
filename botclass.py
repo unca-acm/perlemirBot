@@ -22,11 +22,28 @@ class bot:
         return f"this is a bot toString. The api key for this bot client is {self.apikey}"
 
     #Getters and Setters
-    def setApikey(self, apikey):
+    def setApiCredentials(self, apikey, apisecret, apipass):
             self.apikey = apikey
+            self.apisecret = apisecret
+            self.apipass = apipass
 
+    #perhaps having this method is bad security, remote later?
     def getApikey(self, apikey):
             return self.apikey
+
+    def getPaymentMethod(self):
+        'returns [0]th payment methpd'
+        primaryMethodID = self.apiClient.paymentMethods[0]['id']
+        print(f'primary method id is {primaryMethodID}')
+        #I am assuming that [0]th payment method is primary. Need to double check this is accurate.
+        #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
+
+    def getAllPaymentMethods(self):
+        'Returns array of all payment methods'
+        allPaymentMethods = (self.apiClient.get_payment_methods())
+        print(allPaymentMethods)
+        return allPaymentMethods
+
 
     #Actions
     #make purchase
@@ -34,8 +51,8 @@ class bot:
         print('purchase made so coin much wow')
         print( f'in theory you just purchased {amount} worth of {currency}')
 
-    def marketBuy(self, USDValue):
-        thisOrderReturn = self.apiClient.place_market_order(product_id='BTC-USD',
+    def marketBuy(self, USDValue, pairing):
+        thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
                                           funds=USDValue) #could also use "size" to specify BTC amount                  s
         #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.

@@ -15,7 +15,7 @@ sandbox = cfg.api['SANDBOX']
 myBot = botclass.bot(apiKey, apiSecret, apiPassphrase, sandbox)
 myBot.purchase(5, 'BTC')
 print(myBot)
-myBot.marketBuy(10)
+myBot.marketBuy(10, 'BTC-USD')
 #For testing: this will give an error because $5 is the minimum order. That error will be appended to the marketBuys.json file.
 
 #print(formerDetails["id"])
