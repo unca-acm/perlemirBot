@@ -1,5 +1,7 @@
 import cbpro
 import json
+import uuid
+import os
 
 #bot object type definition
 class bot:
@@ -9,17 +11,18 @@ class bot:
         self.apikey = apikey
         self.apisecret = apisecret
         self.apipassphrase = apipassphrase
-        if sandbox=='true':
+        if sandbox=='True':
             self.api_url='https://api-public.sandbox.pro.coinbase.com/'
         else:
             self.api_url= 'https://api.pro.coinbase.com'
         self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase, self.api_url)
+        self.uuid=uuid.uuid4()
 
     #Instance Methods
 
     #this is essentially our toString for the object.
     def __str__(self):
-        return f"this is a bot toString. The api key for this bot client is {self.apikey}"
+        return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
 
     #Getters and Setters
     def setApiCredentials(self, apikey, apisecret, apipass):
@@ -58,12 +61,30 @@ class bot:
         #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
         print(thisOrderReturn)
         #add details of this buy to our json file
-        with open('marketBuys.json') as marketbuys_jsonfile:
+        print(self.uuid)
+        marketBuysJson = str(self.uuid) + '_marketbuys.json'
+        print(marketBuysJson)
+ #       if not (os.path.isfile(marketBuysJson)):
+ #           file = open(marketBuysJson, 'w+')
+ #           data= {}
+ #           data["Market_Buys"]=[]
+ #           json_data = json.dumps(data)
+ #           print(json_data)
+ #           write_json(json_data, marketBuysJson)
+ #       with open(marketBuysJson, 'w+') as marketbuys_jsonfile:
+ #           data = json.load(marketbuys_jsonfile)
+ #           temp = data['market_buys']
+ #           newOrderToAdd = thisOrderReturn
+ #           temp.append(newOrderToAdd)
+ #       write_json(data, marketBuysJson) #this overwrites the marketBuys file with the new json that has the order appended to it.
+
+        with open(marketBuysJson, "w+") as marketbuys_jsonfile:
             data = json.load(marketbuys_jsonfile)
             temp = data['market_buys']
             newOrderToAdd = thisOrderReturn
             temp.append(newOrderToAdd)
-        write_json(data, 'marketBuys.json') #this overwrites the marketBuys file with the new json that has the order appended to it.
+        write_json(data, marketBuysJson) #this overwrites the marketBuys file with the new json that has the order appended to it.
+        #todo: change json filename to include the guid so it is unique to each bot instance.
 
 #this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
 def write_json(data, filename):
