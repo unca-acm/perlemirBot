@@ -49,6 +49,8 @@ To use in sandbox mode (either for development or for fun), change the "SANDBOX"
 For sandbox mode you will need to make a new API key at:
 https://public.sandbox.pro.coinbase.com/
 
+Note about sandbox: you can't deposit funds from fake bank account, but you *can* import funds from the fake coinbase account (click "Trade", go to BTC-USD, select "deposit" > *"USD" > "Coinbase.com")
+
 ## Related 
 
 We have a webdev team creating a front end dashboard, in addition to a team creating an internal API.
