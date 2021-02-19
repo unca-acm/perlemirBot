@@ -24,6 +24,7 @@ print(myBot)
 
 myBot.marketBuy(10, 'BTC-USD')
 myBot.marketBuy(10, 'BTC-USD')
+myBot.marketSell(10, 'BTC-USD')
 
 #For testing: this will give an error in sandbox mode because I can't seem to get funds deposited from fake bank account.
 #That error will be appended to the marketBuys.json file.
@@ -31,7 +32,7 @@ myBot.marketBuy(10, 'BTC-USD')
 #$10 minimum!
 
 #now testing automateDeposit bot, which is child of botclass bot (inherits all of its methods etc)
-depositBot = automatedDeposit(10, 10)
+depositBot = automatedDeposit(10, 10, 0)
 #consideration: the automatedDeposit bot will get the apikey from config file in order to call the parent bot constructor
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?

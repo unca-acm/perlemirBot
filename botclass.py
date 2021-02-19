@@ -4,8 +4,9 @@ import uuid
 import os
 
 
-# this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
 def write_json(data, filename):
+    '''this writes json. takes object 'data' and places it in 'filename'.
+    Important: Will overwrite if 'filename' exists!'''
     with open(filename, 'w+') as f:
         json.dump(data, f, indent=4)
 
@@ -30,11 +31,8 @@ class bot:
         '''this is essentially our toString for the object.'''
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
 
-
-
-
-
     #Getters and Setters
+
     def setApiCredentials(self, apikey, apisecret, apipass):
             self.apikey = apikey
             self.apisecret = apisecret
@@ -42,12 +40,12 @@ class bot:
 
     #perhaps having this method is bad security, remove later?
     def getApikey(self):
-            return self.apikey
+        return self.apikey
 
     def getPaymentMethod(self):
         'returns [0]th payment method'
         primaryMethodID = self.apiClient.paymentMethods[0]['id']
-        print(f'primary method id is {primaryMethodID}')
+        #print(f'primary method id is {primaryMethodID}')
         return primaryMethodID
         #I am assuming that [0]th payment method is primary. Need to double check this is accurate.
         #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
@@ -55,17 +53,21 @@ class bot:
     def getAllPaymentMethods(self):
         'Returns array of all payment methods'
         allPaymentMethods = (self.apiClient.get_payment_methods())
-        print(allPaymentMethods)
+        #print(allPaymentMethods)
         return allPaymentMethods
+        #For automated deposits, we will need user to tell us which method to use
+        #If we are returned the index, we can establish the ID ourselves.
 
     #Actions
+
     #make purchase
     def purchase(self, amount, currency):
+        '''this method currently does nothing, just a silly debug code'''
         print('purchase made so coin much wow')
         print( f'in theory you just purchased {amount} worth of {currency}')
 
-    #    if os.path.isfile(marketBuysJsonFile):
     def marketBuy(self, USDValue, pairing):
+        '''place market buy, writes the return to file'''
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
                                           funds=USDValue) #could also use "size" to specify BTC amount
@@ -88,3 +90,26 @@ class bot:
             temp=data['market_buys']
             temp.append(thisOrderReturn)
             write_json(temp, marketBuysJsonFile)
+
+
+    def marketSell(self, USDValue, pairing):
+        '''place market sale order, writes the return to file '''
+        thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
+                                          side='sell',
+                                          funds=USDValue) #could also use "size" to specify BTC amount
+        #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
+        print(thisOrderReturn)
+        jsonFilename = str(self.uuid) + '_marketSells.json'
+        #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
+        #if file doesnt exist, create it with this as first entry
+        if not os.path.isfile(jsonFilename):
+            data={'market_sells': [thisOrderReturn]}
+            write_json(data, jsonFilename)
+        #else, append this entry
+        else:
+            f = open(jsonFilename)
+            data = json.load(f)
+            temp=data['market_sells']
+            temp.append(thisOrderReturn)
+            write_json(temp, jsonFilename)
+
