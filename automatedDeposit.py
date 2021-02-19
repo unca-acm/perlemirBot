@@ -30,19 +30,19 @@ class automatedDeposit(bot):
         #perhaps here is also a good place to query API and make sure the account is active and has privileges.
 
 
-myBot = automatedDeposit(10, 10)
-print(myBot)
+#myBot = automatedDeposit(10, 10)
+#print(myBot)
 
 #get primary payment method ID
-paymentMethods = (myBot.apiClient.get_payment_methods())
+#paymentMethods = (myBot.apiClient.get_payment_methods())
 
 #print(paymentMethods)
-primaryMethodID = paymentMethods[0]['id']
-print(f'primary method id is {primaryMethodID}')
+#primaryMethodID = paymentMethods[0]['id']
+#print(f'primary method id is {primaryMethodID}')
 
 #TODO: insert logic for frequency
 
 #this does the actual deposit:
-response = myBot.apiClient.deposit(10, 'USD', primaryMethodID)
-print(response)
+#response = myBot.apiClient.deposit(10, 'USD', primaryMethodID)
+#print(response)
 #TODO: save response in JSON
