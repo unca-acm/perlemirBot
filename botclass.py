@@ -3,6 +3,12 @@ import json
 import uuid
 import os
 
+
+# this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
+def write_json(data, filename):
+    with open(filename, 'w+') as f:
+        json.dump(data, f, indent=4)
+
 #bot object type definition
 class bot:
     'Object for api client bot'
@@ -23,6 +29,10 @@ class bot:
     def __str__(self):
         '''this is essentially our toString for the object.'''
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
+
+
+
+
 
     #Getters and Setters
     def setApiCredentials(self, apikey, apisecret, apipass):
@@ -54,6 +64,7 @@ class bot:
         print('purchase made so coin much wow')
         print( f'in theory you just purchased {amount} worth of {currency}')
 
+    #    if os.path.isfile(marketBuysJsonFile):
     def marketBuy(self, USDValue, pairing):
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
@@ -63,18 +74,17 @@ class bot:
         #add details of this buy to our json file
         #establish filename
         marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
-        with open(marketBuysJsonFile, "w+") as file:
-            data=json.load(file)
-            #Add check for if data is empty
-            #if data is empty, reate empty array to append to
-            #this is giving me issues
-            print(f"data {data}")
-            temp=data['marketbuys']
-            newToAdd=thisOrderReturn
-            temp.append(newToAdd)
-        write_json(data, marketBuysJsonFile)
-
-#this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
-def write_json(data, filename):
-    with open(filename,'w+') as f:
-        json.dump(data, f, indent=4)
+        #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
+        #if file doesnt exist, create it with this as first entry
+        if not os.path.isfile(marketBuysJsonFile):
+            print(f"debug: making file {marketBuysJsonFile}")
+            marketbuys={'market_buys': [thisOrderReturn]}
+            write_json(marketbuys, marketBuysJsonFile)
+        #else, append this entry
+        else:
+            print(f"debug: file exists")
+            f = open(marketBuysJsonFile)
+            data = json.load(f)
+            temp=data['market_buys']
+            temp.append(thisOrderReturn)
+            write_json(temp, marketBuysJsonFile)
