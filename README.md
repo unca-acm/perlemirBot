@@ -13,8 +13,8 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 This project is in its infancy. Stay tuned.
 
 ## Project TODO
-- [ ] Create header file for all imports ELIAS
-- [ ] Research callbacks / periodic executions ALEX
+- [ ] Create header file for all imports (not sure anymore this is necessary)
+- [ ] Research callbacks / periodic executions (alex - looking into 'schedule' library)
 - [ ] bot class object getters: ALAN & ELIAS
   
     -[ ] Account ID
@@ -24,12 +24,13 @@ This project is in its infancy. Stay tuned.
     -[ ] API privileges 
      
     -[ ] Wallets
+  
 - [ ] bot class object Setters:
      
   -[ ] TBD
   
 - [ ] bot class object: buy/sell
-- [ ] bot class object: json writing/reading (saving and reading transaction ID data)
+- [ ] bot class object: json writing/reading (saving and reading transaction ID data) (use uuid)
  -[ ] determine data/file structure for storing json info
 - [ ] automated deposit script
 - [ ] DCA automated buys script

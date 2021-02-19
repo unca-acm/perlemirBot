@@ -35,9 +35,10 @@ class bot:
             return self.apikey
 
     def getPaymentMethod(self):
-        'returns [0]th payment methpd'
+        'returns [0]th payment method'
         primaryMethodID = self.apiClient.paymentMethods[0]['id']
         print(f'primary method id is {primaryMethodID}')
+        return primaryMethodID
         #I am assuming that [0]th payment method is primary. Need to double check this is accurate.
         #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
 
@@ -46,7 +47,6 @@ class bot:
         allPaymentMethods = (self.apiClient.get_payment_methods())
         print(allPaymentMethods)
         return allPaymentMethods
-
 
     #Actions
     #make purchase
@@ -57,18 +57,18 @@ class bot:
     def marketBuy(self, USDValue, pairing):
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
-                                          funds=USDValue) #could also use "size" to specify BTC amount                  s
+                                          funds=USDValue) #could also use "size" to specify BTC amount
         #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
         print(thisOrderReturn)
         #add details of this buy to our json file
         #establish filename
-        marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
-        with open(marketBuysJsonFile) as file:
-            data=json.load(file)
-            if 'mb' not in data:
-            temp=data['mb']
-            temp.append(thisOrderReturn)
-        write_json(data, marketBuysJsonFile)
+#        marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
+#        with open(marketBuysJsonFile) as file:
+#            data=json.load(file)
+#            if 'mb' not in data:
+#            temp=data['mb']
+#            temp.append(thisOrderReturn)
+#        write_json(data, marketBuysJsonFile)
         #todo: change json filename to include the guid so it is unique to each bot instance.
 
 #this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!

@@ -30,7 +30,6 @@ class automatedDeposit(bot):
         #perhaps here is also a good place to query API and make sure the account is active and has privileges.
 
 
-
 myBot = automatedDeposit(10, 10)
 print(myBot)
 

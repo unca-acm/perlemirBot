@@ -35,6 +35,7 @@ depositBot = automatedDeposit(10, 10)
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
 
+depositBot.getAllPaymentMethods()
 #testing that the childbot can do something.
 depositBot.getApikey()
 
