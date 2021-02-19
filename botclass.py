@@ -61,32 +61,17 @@ class bot:
         #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
         print(thisOrderReturn)
         #add details of this buy to our json file
-        print(self.uuid)
-        marketBuysJson = str(self.uuid) + '_marketbuys.json'
-        print(marketBuysJson)
- #       if not (os.path.isfile(marketBuysJson)):
- #           file = open(marketBuysJson, 'w+')
- #           data= {}
- #           data["Market_Buys"]=[]
- #           json_data = json.dumps(data)
- #           print(json_data)
- #           write_json(json_data, marketBuysJson)
- #       with open(marketBuysJson, 'w+') as marketbuys_jsonfile:
- #           data = json.load(marketbuys_jsonfile)
- #           temp = data['market_buys']
- #           newOrderToAdd = thisOrderReturn
- #           temp.append(newOrderToAdd)
- #       write_json(data, marketBuysJson) #this overwrites the marketBuys file with the new json that has the order appended to it.
-
-        with open(marketBuysJson, "w+") as marketbuys_jsonfile:
-            data = json.load(marketbuys_jsonfile)
-            temp = data['market_buys']
-            newOrderToAdd = thisOrderReturn
-            temp.append(newOrderToAdd)
-        write_json(data, marketBuysJson) #this overwrites the marketBuys file with the new json that has the order appended to it.
+        #establish filename
+        marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
+        with open(marketBuysJsonFile) as file:
+            data=json.load(file)
+            if 'mb' not in data:
+            temp=data['mb']
+            temp.append(thisOrderReturn)
+        write_json(data, marketBuysJsonFile)
         #todo: change json filename to include the guid so it is unique to each bot instance.
 
 #this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
 def write_json(data, filename):
-    with open(filename,'w') as f:
+    with open(filename,'w+') as f:
         json.dump(data, f, indent=4)
