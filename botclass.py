@@ -20,8 +20,8 @@ class bot:
 
     #Instance Methods
 
-    #this is essentially our toString for the object.
     def __str__(self):
+        '''this is essentially our toString for the object.'''
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
 
     #Getters and Setters
@@ -30,7 +30,7 @@ class bot:
             self.apisecret = apisecret
             self.apipass = apipass
 
-    #perhaps having this method is bad security, remote later?
+    #perhaps having this method is bad security, remove later?
     def getApikey(self):
             return self.apikey
 
@@ -62,14 +62,17 @@ class bot:
         print(thisOrderReturn)
         #add details of this buy to our json file
         #establish filename
-#        marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
-#        with open(marketBuysJsonFile) as file:
-#            data=json.load(file)
-#            if 'mb' not in data:
-#            temp=data['mb']
-#            temp.append(thisOrderReturn)
-#        write_json(data, marketBuysJsonFile)
-        #todo: change json filename to include the guid so it is unique to each bot instance.
+        marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
+        with open(marketBuysJsonFile, "w+") as file:
+            data=json.load(file)
+            #Add check for if data is empty
+            #if data is empty, reate empty array to append to
+            #this is giving me issues
+            print(f"data {data}")
+            temp=data['marketbuys']
+            newToAdd=thisOrderReturn
+            temp.append(newToAdd)
+        write_json(data, marketBuysJsonFile)
 
 #this writes json. takes object 'data' and places it in 'filename'. Will overwrite if 'filename' exists!
 def write_json(data, filename):

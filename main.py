@@ -23,11 +23,12 @@ print(myBot)
 #toString test.
 
 myBot.marketBuy(10, 'BTC-USD')
+myBot.marketBuy(10, 'BTC-USD')
+
 #For testing: this will give an error in sandbox mode because I can't seem to get funds deposited from fake bank account.
 #That error will be appended to the marketBuys.json file.
 #if no error, the transaction details get appended.
 #$10 minimum!
-
 
 #now testing automateDeposit bot, which is child of botclass bot (inherits all of its methods etc)
 depositBot = automatedDeposit(10, 10)
@@ -38,4 +39,3 @@ depositBot = automatedDeposit(10, 10)
 depositBot.getAllPaymentMethods()
 #testing that the childbot can do something.
 depositBot.getApikey()
-
