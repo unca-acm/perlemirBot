@@ -28,13 +28,44 @@ class automatedDeposit(bot):
         #also add a check to make sure API config file is correct
         #perhaps here is also a good place to query API and make sure the account is active and has privileges.
 
+    def setAmount(self, newAmount):
+        '''setter for automated deposit amount'''
+        self.amount =newAmount
+
+    def getAmount(self):
+        '''getter for automated deposit amount'''
+        return self.amount
+
+    def setFrequency(self, newFrequency):
+        '''setter for automated deposit frequency'''
+        self.frequency =newFrequency
+
+    def getFrequency(self):
+        '''getter for automated deposit amount'''
+        return self.frequency
+
+    def getAmount(self):
+        '''getter for automated deposit amount'''
+        return self.amount
+
+    def getPaymentMethod(self):
+        '''getter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
+        return self.paymentMethodIndex
+
+    def setPaymentMethod(self, newPaymentMethodIndex):
+        '''setter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
+        self.paymentMethodIndex = newPaymentMethodIndex
 
     def triggerDeposit(self, paymentMethodID):
         '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.
         Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.'''
         retStatement = self.apiClient.deposit(self.amount, 'USD', paymentMethodID)
+        #todo: record the return into a json
         return retStatement
 
+    def run(self):
+        while self.isActive:
+            schedule.every(self.frequency).days.do(self.triggerDeposit)
 
 #get primary payment method ID
 #paymentMethods = (myBot.apiClient.get_payment_methods())
