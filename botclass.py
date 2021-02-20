@@ -24,6 +24,7 @@ class bot:
             self.api_url= 'https://api.pro.coinbase.com'
         self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase, self.api_url)
         self.uuid=uuid.uuid4()
+        self.isActive=True
 
     #Instance Methods
 
@@ -32,6 +33,11 @@ class bot:
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
 
     #Getters and Setters
+
+    def setActivity(self, booleanInput):
+        '''Changes bot isActive to True or False.
+        Bots perform automated functions while isActive=True. This allows for pausing of bots without destroying/initiating new ones'''
+        self.isActive = booleanInput
 
     def setApiCredentials(self, apikey, apisecret, apipass):
             self.apikey = apikey
