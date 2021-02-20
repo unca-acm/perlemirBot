@@ -14,7 +14,7 @@ from botclass import bot
 #    make it work
 
 #trying to use inheritance here
-class automatedDeposit(bot):
+class automatedDepositBot(bot):
     def __init__(self, frequency, amount, paymentMethodIndex):
         apiKey = cfg.api['API_KEY']
         apiSecret = cfg.api['API_SECRET']
@@ -31,6 +31,7 @@ class automatedDeposit(bot):
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
         self.amount =newAmount
+        #todo: add check to make sure amount is > 10
 
     def getAmount(self):
         '''getter for automated deposit amount'''
@@ -38,7 +39,7 @@ class automatedDeposit(bot):
 
     def setFrequency(self, newFrequency):
         '''setter for automated deposit frequency'''
-        self.frequency =newFrequency
+        self.frequency = newFrequency
 
     def getFrequency(self):
         '''getter for automated deposit amount'''
@@ -50,6 +51,7 @@ class automatedDeposit(bot):
 
     def getPaymentMethod(self):
         '''getter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
+        '''to get the actual info for this payment method, you need to call: self.getAllPaymentMethods()[self.paymentMethodIndex]'''
         return self.paymentMethodIndex
 
     def setPaymentMethod(self, newPaymentMethodIndex):
@@ -57,14 +59,18 @@ class automatedDeposit(bot):
         self.paymentMethodIndex = newPaymentMethodIndex
 
     def triggerDeposit(self, paymentMethodID):
-        '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.
-        Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.'''
+        '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
+        #Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.
+        paymentMethodID = self.getAllPaymentMethods()[self.paymentMethodIndex]['id']
+        #this line of code needs to be tested,
+
         retStatement = self.apiClient.deposit(self.amount, 'USD', paymentMethodID)
         #todo: record the return into a json
         return retStatement
 
     def run(self):
         while self.isActive:
+            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD every {self.frequency} days")
             schedule.every(self.frequency).days.do(self.triggerDeposit)
 
 #get primary payment method ID

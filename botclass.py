@@ -39,6 +39,10 @@ class bot:
         Bots perform automated functions while isActive=True. This allows for pausing of bots without destroying/initiating new ones'''
         self.isActive = booleanInput
 
+    def getActivity(self):
+        '''getter for boolean isActive'''
+        return self.isActive
+
     def setApiCredentials(self, apikey, apisecret, apipass):
             self.apikey = apikey
             self.apisecret = apisecret
@@ -77,8 +81,6 @@ class bot:
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
                                           funds=USDValue) #could also use "size" to specify BTC amount
-        #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
-        print(thisOrderReturn)
         #add details of this buy to our json file
         #establish filename
         marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
@@ -96,6 +98,7 @@ class bot:
             temp=data['market_buys']
             temp.append(thisOrderReturn)
             write_json(temp, marketBuysJsonFile)
+        return thisOrderReturn
 
 
     def marketSell(self, USDValue, pairing):
@@ -103,8 +106,6 @@ class bot:
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='sell',
                                           funds=USDValue) #could also use "size" to specify BTC amount
-        #print the return response from the api request - will give the transaction ID if it went through, or the error if it didn't.
-        print(thisOrderReturn)
         jsonFilename = str(self.uuid) + '_marketSells.json'
         #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
         #if file doesnt exist, create it with this as first entry
@@ -118,4 +119,5 @@ class bot:
             temp=data['market_sells']
             temp.append(thisOrderReturn)
             write_json(temp, jsonFilename)
+        return thisOrderReturn
 

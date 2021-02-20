@@ -2,7 +2,7 @@ import cbpro
 import json
 import apiconfig as cfg
 import botclass
-from automatedDeposit import automatedDeposit
+from automatedDeposit import automatedDepositBot
 
 print('The taxation of trade routes to outlaying star systems is in dispute.')
 
@@ -32,11 +32,11 @@ myBot.marketSell(10, 'BTC-USD')
 #$10 minimum!
 
 #now testing automateDeposit bot, which is child of botclass bot (inherits all of its methods etc)
-depositBot = automatedDeposit(10, 10, 0)
+depositBot = automatedDepositBot(10, 10, 0)
 #consideration: the automatedDeposit bot will get the apikey from config file in order to call the parent bot constructor
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
 
-depositBot.getAllPaymentMethods()
+print(depositBot.getAllPaymentMethods())
 #testing that the childbot can do something.
 depositBot.getApikey()
