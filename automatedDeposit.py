@@ -73,6 +73,9 @@ class automatedDepositBot(bot):
             print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD every {self.frequency} days")
             schedule.every(self.frequency).days.do(self.triggerDeposit)
 
+
+#todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
+
 #get primary payment method ID
 #paymentMethods = (myBot.apiClient.get_payment_methods())
 
