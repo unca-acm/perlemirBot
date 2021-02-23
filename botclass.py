@@ -50,7 +50,7 @@ class bot:
 
     #perhaps having this method is bad security, remove later?
     def getApikey(self):
-        return self.apiKey
+        return self.apikey
 
     def getPaymentMethod(self):
         'returns [0]th payment method'
