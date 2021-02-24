@@ -45,12 +45,12 @@ class automatedDepositBot(bot):
         '''getter for automated deposit amount'''
         return self.amount
 
-    def getPaymentMethod(self):
+    def getPaymentMethodIndex(self):
         '''getter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
         '''to get the actual info for this payment method, you need to call: self.getAllPaymentMethods()[self.paymentMethodIndex]'''
         return self.paymentMethodIndex
 
-    def setPaymentMethod(self, newPaymentMethodIndex):
+    def setPaymentMethodIndex(self, newPaymentMethodIndex):
         '''setter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
         self.paymentMethodIndex = newPaymentMethodIndex
 
