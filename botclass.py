@@ -2,6 +2,7 @@ import cbpro
 import json
 import uuid
 import os
+import apiconfig as cfg
 
 
 def write_json(data, filename):
@@ -14,15 +15,16 @@ def write_json(data, filename):
 class bot:
     'Object for api client bot'
     #constructor
-    def __init__(self, apikey, apisecret, apipassphrase, sandbox):
-        self.apikey = apikey
-        self.apisecret = apisecret
-        self.apipassphrase = apipassphrase
-        if sandbox=='True':
+    def __init__(self):
+        self.apiKey = cfg.api['API_KEY']
+        self.apiSecret = cfg.api['API_SECRET']
+        self.apiPassphrase = cfg.api['API_PASSPHRASE']
+        self.sandbox = cfg.api['SANDBOX']
+        if self.sandbox=='True':
             self.api_url='https://api-public.sandbox.pro.coinbase.com/'
         else:
             self.api_url= 'https://api.pro.coinbase.com'
-        self.apiClient = cbpro.AuthenticatedClient(apikey, apisecret, apipassphrase, self.api_url)
+        self.apiClient = cbpro.AuthenticatedClient(self.apiKey, self.apiSecret, self.apiPassphrase, self.api_url)
         self.uuid=uuid.uuid4()
         self.isActive=True
 
@@ -44,13 +46,13 @@ class bot:
         return self.isActive
 
     def setApiCredentials(self, apikey, apisecret, apipass):
-            self.apikey = apikey
-            self.apisecret = apisecret
-            self.apipass = apipass
+            self.apiKey = apikey
+            self.apiSecret = apisecret
+            self.apiPass = apipass
 
     #perhaps having this method is bad security, remove later?
     def getApikey(self):
-        return self.apikey
+        return self.apiKey
 
     def getPaymentMethod(self):
         'returns [0]th payment method'
@@ -121,3 +123,5 @@ class bot:
             write_json(temp, jsonFilename)
         return thisOrderReturn
 
+#todo: add getPaymentMethod function here so that we can make a parent bot that gets the payment methods, to show the list of options in the dashboard before we create the more specific bots.
+#todo: The API will call this method, list them all by name, and pass the chosen paymentMethod index as param

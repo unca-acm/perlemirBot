@@ -15,13 +15,9 @@ from botclass import bot
 
 #trying to use inheritance here
 class automatedDepositBot(bot):
-    def __init__(self, frequency, amount, paymentMethodIndex):
-        apiKey = cfg.api['API_KEY']
-        apiSecret = cfg.api['API_SECRET']
-        apiPassphrase = cfg.api['API_PASSPHRASE']
-        sandbox = cfg.api['SANDBOX']
-        super().__init__(apiKey, apiSecret, apiPassphrase, sandbox)
-        self.frequency = frequency
+    def __init__(self, dayOfWeek, amount, paymentMethodIndex):
+        super().__init__()
+        self.dayOfWeek = dayOfWeek
         self.amount = amount
         self.paymentMethodIndex = paymentMethodIndex
         #TODO: add check here to make sure amount is > 10
@@ -37,13 +33,13 @@ class automatedDepositBot(bot):
         '''getter for automated deposit amount'''
         return self.amount
 
-    def setFrequency(self, newFrequency):
+    def setDayOfWeek(self, newDay):
         '''setter for automated deposit frequency'''
-        self.frequency = newFrequency
+        self.dayOfWeek = newDay
 
-    def getFrequency(self):
+    def getDayOfWeek(self):
         '''getter for automated deposit amount'''
-        return self.frequency
+        return self.dayOfWeek
 
     def getAmount(self):
         '''getter for automated deposit amount'''
@@ -71,8 +67,8 @@ class automatedDepositBot(bot):
     def run(self):
         while self.isActive:
             print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD every {self.frequency} days")
-            schedule.every(self.frequency).days.do(self.triggerDeposit)
-
+            job=self.triggerDeposit
+            #schedule.every().(self.dayOfWeek).(self.frequency).days.do(job)
 
 #todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
 

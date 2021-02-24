@@ -13,7 +13,7 @@ apiPassphrase =cfg.api['API_PASSPHRASE']
 sandbox = cfg.api['SANDBOX']
 
 #make a new bot object ()
-myBot = botclass.bot(apiKey, apiSecret, apiPassphrase, sandbox)
+myBot = botclass.bot()
 #perhaps grab these params from the config file directly - using local variables is superfluous?
 
 #myBot.purchase(5, 'BTC')
@@ -39,5 +39,7 @@ depositBot = automatedDepositBot(10, 10, 0)
 #perhaps make this consistent between the two?
 
 print(depositBot.getAllPaymentMethods())
+print(depositBot.getPaymentMethod())
+
 #testing that the childbot can do something.
 depositBot.getApikey()
