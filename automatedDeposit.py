@@ -57,7 +57,10 @@ class automatedDepositBot(bot):
     def getChosenPaymentMethodID(self):
         'returns chosen payment method ID'
         allMethods = self.getAllPaymentMethods
-        return allMethods[self.getPaymentMethodIndex()][id]
+        myIndex = int(self.paymentMethodIndex)
+        myMethodObject = allMethods['myIndex']
+        return myMethodObject['id']
+
         #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
 
     def triggerDeposit(self, paymentMethodID):
@@ -91,3 +94,6 @@ class automatedDepositBot(bot):
 #response = myBot.apiClient.deposit(10, 'USD', primaryMethodID)
 #print(response)
 #TODO: save response in JSON
+
+
+#todo list: scheduling, payment method id return function

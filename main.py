@@ -38,7 +38,8 @@ depositBot = automatedDepositBot(10, 10, 0)
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
 
-mylist=depositBot.getAllPaymentMethods()
-print(mylist[0]['id'])
-print(depositBot.getChosenPaymentMethodID())
+
+#print(depositBot.getChosenPaymentMethodID())
+#this is giving an error and need to debug
+
 #print(depositBot.triggerDeposit())
