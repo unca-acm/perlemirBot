@@ -39,7 +39,7 @@ depositBot = automatedDepositBot(10, 10, 0)
 #perhaps make this consistent between the two?
 
 
-#print(depositBot.getChosenPaymentMethodID())
+print(depositBot.getChosenPaymentMethodID())
 #this is giving an error and need to debug
 
 #print(depositBot.triggerDeposit())
