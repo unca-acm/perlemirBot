@@ -9,41 +9,54 @@ import schedule
 from botclass import bot
 
 
-#pseudocode
-#    receive asset to buy (ETH/BTC/Other)
-#    receive amount in USD to purchase
-#    Buys have $10 minimum so make sure amount is >$10 (or perhaps write logic in to batch until reaches $10 minimum)
-#    receive frequency to make purchase
-#    create bot  (inherit bot from botclass?)
-#    make the buys on set schedule
-#    Record information about transaction into a JSON - either just the transaction ID, or more info (entire return statement) - TBD
-
-#trying to use the same inheritance as automatedDeposit to keep things consistent
+#automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
-    def __init__(self, frequency, amount):
-        apiKey = cfg.api['API_KEY']
-        apiSecret = cfg.api['API_SECRET']
-        apiPassphrase = cfg.api['API_PASSPHRASE']
-        sandbox = cfg.api['SANDBOX']
-        super().__init__(apiKey, apiSecret, apiPassphrase, sandbox)
+    def __init__(self, frequency, fiatAmount, pairing):
+        super().__init__()
+        self.dayOfWeek = dayOfWeek
+        self.amount = fiatAmount
+        self.paymentMethodIndex = paymentMethodIndex
         self.frequency = frequency
-        self.amount = amount
+        self.pairing = pairing
+        #pairing is'BTC-USD' or 'ETH-USD' etc.
 
+    def setFiatAmount(self, newAmount):
+        '''setter for automated purchase amount (in fiat)'''
+        self.fiatAmount =newAmount
+        #todo: add check to make sure amount is > 10
 
-myBot = automatedBuy(10,10)     #creating bot
-print(myBot)
-payment_methods = bot.apiClient.get_payment_methods()   #should get the account to buy with (API documentation)
-account = bot.apiClient.get_primary_account()
-payment_method = client.get_payment_methods()[0]
+    def getFiatAmount(self):
+        '''getter for automated purchase amount (in fiat)'''
+        return self.fiatAmount
 
+    def getFrequency(self, newFreq):
+        '''setter for frequency'''
+        return self.frequency
 
-def job():          #the function of doing one buy BTC (got from api documentation)
-    buy = account.buy(amount=bot.amount,
-                    currency="BTC",
-                    payment_method=payment_method.id)
+    def setFrequency(self, newFreq):
+        '''setter for frequency'''
+        self.frequency =newFreq
 
+    def getPairing(self):
+        return self.pairing
 
-schedule.every(bot.frequency).days.do(job) #setting the schedule to run at set frequency
-while True:                                 #running the bot
-    schedule.run_pending()
-    time.sleep(1)
+    def setPairing(self, newpair):
+        self.pairing = newpair;
+        #todo: discuss whether this is necessary. In theory, you probably just want to make a new bot if you want to change currency, as opposed to altering existing bot.
+
+    def triggerBuy(self):
+        '''this is the method that the scheduler library will call to perform desired action'''
+        transaction = self.marketBuy(self, self.amount, self.pairing)
+        #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
+        return transaction
+
+    #todo: scheduler!
+
+    def run(self):
+        while self.isActive:
+            print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} ")
+            #todo: change this print statement to reflect accurate frequency
+            job=self.triggerDeposit
+            #schedule.every()..(self.frequency).days.do(job)
+            #TODO: save response in JSON (probably not necessary, happens inside marketBuy)
+
