@@ -56,7 +56,7 @@ class automatedDepositBot(bot):
 
     def getChosenPaymentMethodID(self):
         'returns chosen payment method ID'
-        allMethods = self.getAllPaymentMethods()
+        allMethods = self.getAllPaymentMethods
         newMethod = allMethods()
         return newMethod[0]['id']
         
