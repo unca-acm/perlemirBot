@@ -54,6 +54,12 @@ class automatedDepositBot(bot):
         '''setter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
         self.paymentMethodIndex = newPaymentMethodIndex
 
+    def getChosenPaymentMethodID(self):
+        'returns chosen payment method ID'
+        allMethods = self.getAllPaymentMethods
+        return allMethods[self.getPaymentMethodIndex()][id]
+        #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
+
     def triggerDeposit(self, paymentMethodID):
         '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
         #Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.

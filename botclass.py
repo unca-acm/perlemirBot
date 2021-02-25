@@ -4,7 +4,6 @@ import uuid
 import os
 import apiconfig as cfg
 
-
 def write_json(data, filename):
     '''this writes json. takes object 'data' and places it in 'filename'.
     Important: Will overwrite if 'filename' exists!'''
@@ -54,21 +53,13 @@ class bot:
     def getApikey(self):
         return self.apiKey
 
-    def getPaymentMethod(self):
-        'returns [0]th payment method'
-        primaryMethodID = self.apiClient.paymentMethods[0]['id']
-        #print(f'primary method id is {primaryMethodID}')
-        return primaryMethodID
-        #I am assuming that [0]th payment method is primary. Need to double check this is accurate.
-        #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
-
     def getAllPaymentMethods(self):
         'Returns array of all payment methods'
         allPaymentMethods = (self.apiClient.get_payment_methods())
-        #print(allPaymentMethods)
         return allPaymentMethods
         #For automated deposits, we will need user to tell us which method to use
         #If we are returned the index, we can establish the ID ourselves.
+        # todo: The API will call this method, list them all by name, and pass the chosen paymentMethod index as param in order to make the automatedDeposit bot.
 
     #Actions
 
@@ -102,7 +93,6 @@ class bot:
             write_json(temp, marketBuysJsonFile)
         return thisOrderReturn
 
-
     def marketSell(self, USDValue, pairing):
         '''place market sale order, writes the return to file '''
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
@@ -123,5 +113,3 @@ class bot:
             write_json(temp, jsonFilename)
         return thisOrderReturn
 
-#todo: add getPaymentMethod function here so that we can make a parent bot that gets the payment methods, to show the list of options in the dashboard before we create the more specific bots.
-#todo: The API will call this method, list them all by name, and pass the chosen paymentMethod index as param

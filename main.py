@@ -38,8 +38,7 @@ depositBot = automatedDepositBot(10, 10, 0)
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
 
-print(depositBot.getAllPaymentMethods())
-print(depositBot.getPaymentMethod())
-
-#testing that the childbot can do something.
-depositBot.getApikey()
+mylist=depositBot.getAllPaymentMethods()
+print(mylist[0]['id'])
+print(depositBot.getChosenPaymentMethodID())
+#print(depositBot.triggerDeposit())
