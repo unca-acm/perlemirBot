@@ -38,7 +38,7 @@ depositBot = automatedDepositBot(10, 10, 0)
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
 
-
+print('testing working branch')
 #print(depositBot.getChosenPaymentMethodID())
 #this is giving an error and need to debug
 
