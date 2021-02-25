@@ -35,6 +35,7 @@ print(myBot.getApikey())
 #now testing automateDeposit bot, which is child of botclass bot (inherits all of its methods etc)
 depositBot = automatedDepositBot(10, 10, 0)
 print(depositBot.getChosenPaymentMethodID())
+print(depositBot.triggerDeposit(10))
 #consideration: the automatedDeposit bot will get the apikey from config file in order to call the parent bot constructor
 #the parent bot constructor needs these as params
 #perhaps make this consistent between the two?
