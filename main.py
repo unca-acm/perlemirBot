@@ -3,6 +3,7 @@ import json
 import apiconfig as cfg
 import botclass
 from automatedDeposit import automatedDepositBot
+from automatedBuy import automatedBuy
 
 print('The taxation of trade routes to outlaying star systems is in dispute.')
 
@@ -41,3 +42,9 @@ print(myid)
 print(depositBot.triggerDeposit(myid))
 #This is giving a "user login required" error, unsure why
 #todo look into this error! Not sure if account specific, or problem with code logic.
+
+
+#testing automatedBuy bot
+buybot = automatedBuy(1, 10, 'BTC-USD')
+print(buybot)
+print(buybot.triggerBuy())
