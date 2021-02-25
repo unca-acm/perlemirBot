@@ -1,4 +1,6 @@
 #this will be the script that makes automated deposits
+
+#todo remove unnecessary imports?
 import apiconfig as cfg
 import cbpro
 import json

@@ -1,5 +1,6 @@
 #Automated Buys
 
+#todo remove unnecessary imports?
 import apiconfig as cfg
 import cbpro
 import json
@@ -56,4 +57,3 @@ class automatedBuy(bot):
             job=self.triggerDeposit
             #schedule.every()..(self.frequency).days.do(job)
             #TODO: save response in JSON (probably not necessary, happens inside marketBuy)
-
