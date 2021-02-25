@@ -26,6 +26,7 @@ class bot:
         self.apiClient = cbpro.AuthenticatedClient(self.apiKey, self.apiSecret, self.apiPassphrase, self.api_url)
         self.uuid=uuid.uuid4()
         self.isActive=True
+    #todo: inside constructor, check that API key credentials are valid. Perhaps throw an exception if not.
 
     #Instance Methods
 
@@ -50,6 +51,7 @@ class bot:
             self.apiPass = apipass
 
     #perhaps having this method is bad security, remove later?
+    #todo consider leaving or removing this. If leading, need setters for all the other API credentials also.
     def getApikey(self):
         return self.apiKey
 
@@ -58,7 +60,7 @@ class bot:
         allPaymentMethods = (self.apiClient.get_payment_methods())
         return allPaymentMethods
         #For automated deposits, we will need user to tell us which method to use
-        #If we are returned the index, we can establish the ID ourselves.
+        #Once we are returned the index, we can establish the ID ourselves.
         # todo: The API will call this method, list them all by name, and pass the chosen paymentMethod index as param in order to make the automatedDeposit bot.
 
     #Actions
@@ -67,7 +69,7 @@ class bot:
     def purchase(self, amount, currency):
         '''this method currently does nothing, just a silly debug code'''
         print('purchase made so coin much wow')
-        print( f'in theory you just purchased {amount} worth of {currency}')
+        print( f'in theory you just purchased {amount} worth of {currency}, but not really.')
 
     def marketBuy(self, USDValue, pairing):
         '''place market buy, writes the return to file'''
@@ -80,12 +82,12 @@ class bot:
         #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
         #if file doesnt exist, create it with this as first entry
         if not os.path.isfile(marketBuysJsonFile):
-            print(f"debug: making file {marketBuysJsonFile}")
+            #print(f"debug: making file {marketBuysJsonFile}")
             marketbuys={'market_buys': [thisOrderReturn]}
             write_json(marketbuys, marketBuysJsonFile)
         #else, append this entry
         else:
-            print(f"debug: file exists")
+            #print(f"debug: file exists")
             f = open(marketBuysJsonFile)
             data = json.load(f)
             temp=data['market_buys']
@@ -112,4 +114,3 @@ class bot:
             temp.append(thisOrderReturn)
             write_json(temp, jsonFilename)
         return thisOrderReturn
-
