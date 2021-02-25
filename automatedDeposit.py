@@ -57,9 +57,8 @@ class automatedDepositBot(bot):
     def getChosenPaymentMethodID(self):
         'returns chosen payment method ID'
         allMethods = self.getAllPaymentMethods
-        myIndex = int(self.paymentMethodIndex)
-        myMethodObject = allMethods['myIndex']
-        return myMethodObject['id']
+        objectMethods = allMethods()
+        return objectMethods[self.paymentMethodIndex]['id']
 
         #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
 
