@@ -40,6 +40,9 @@ depositBot = automatedDepositBot(10, 10, 0)
 
 
 print(depositBot.getChosenPaymentMethodID())
+print('testing working branch')
+#print(depositBot.getChosenPaymentMethodID())
+
 #this is giving an error and need to debug
 
 #print(depositBot.triggerDeposit())
