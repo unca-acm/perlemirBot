@@ -1,1 +1,2 @@
 #todo: make this file, and remove the venv from the repo.
+#I am pretty sure that 'schedule' and 'cbpro' are the only libraries that are not default and need to be installed.
