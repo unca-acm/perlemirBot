@@ -24,14 +24,14 @@ class automatedBuy(bot):
 
     def setFiatAmount(self, newAmount):
         '''setter for automated purchase amount (in fiat)'''
-        self.fiatAmount =newAmount
+        self.fiatAmount = newAmount
         #todo: add check to make sure amount is > 10
 
     def setFrequency(self, newFreq):
         '''setter for frequency'''
-        self.frequency =newFreq
+        self.frequency = newFreq
 
-    def getFrequency(self, newFreq):
+    def getFrequency(self):
         '''setter for frequency'''
         return self.frequency
 
@@ -39,7 +39,7 @@ class automatedBuy(bot):
         return self.pairing
 
     def setPairing(self, newpair):
-        self.pairing = newpair;
+        self.pairing = newpair
         #todo: discuss whether this is necessary. In theory, you probably just want to make a new bot if you want to change currency, as opposed to altering existing bot.
 
     def triggerBuy(self):
