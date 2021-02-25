@@ -4,6 +4,8 @@ import uuid
 import os
 import apiconfig as cfg
 
+#todo: place json writes into ./json folder for all methods (this folder was added to the gitignore)
+
 def write_json(data, filename):
     '''this writes json. takes object 'data' and places it in 'filename'.
     Important: Will overwrite if 'filename' exists!'''
