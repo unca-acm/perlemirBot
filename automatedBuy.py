@@ -8,34 +8,31 @@ import sys
 import schedule
 from botclass import bot
 
-
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
     def __init__(self, frequency, fiatAmount, pairing):
         super().__init__()
-        self.dayOfWeek = dayOfWeek
         self.amount = fiatAmount
-        self.paymentMethodIndex = paymentMethodIndex
         self.frequency = frequency
         self.pairing = pairing
         #pairing is'BTC-USD' or 'ETH-USD' etc.
+
+    def getFiatAmount(self):
+        '''getter for automated purchase amount (in fiat)'''
+        return self.fiatAmount
 
     def setFiatAmount(self, newAmount):
         '''setter for automated purchase amount (in fiat)'''
         self.fiatAmount =newAmount
         #todo: add check to make sure amount is > 10
 
-    def getFiatAmount(self):
-        '''getter for automated purchase amount (in fiat)'''
-        return self.fiatAmount
+    def setFrequency(self, newFreq):
+        '''setter for frequency'''
+        self.frequency =newFreq
 
     def getFrequency(self, newFreq):
         '''setter for frequency'''
         return self.frequency
-
-    def setFrequency(self, newFreq):
-        '''setter for frequency'''
-        self.frequency =newFreq
 
     def getPairing(self):
         return self.pairing
@@ -46,7 +43,7 @@ class automatedBuy(bot):
 
     def triggerBuy(self):
         '''this is the method that the scheduler library will call to perform desired action'''
-        transaction = self.marketBuy(self, self.amount, self.pairing)
+        transaction = self.marketBuy(self.amount, self.pairing)
         #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
         return transaction
 
