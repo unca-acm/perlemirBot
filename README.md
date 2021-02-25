@@ -18,6 +18,7 @@ Goal is for MVP to be finished by Friday, March 5. MVP means automatedDeposit an
 - [ ] Finish figuring out payment methods for deposit (perhaps requires non-sandbox testing)
 - [ ] For both current bot projects, figure out 'schedule' library, and determine what increment we want to use and/or allow
  -[ ] determine file structure and naming convention for storing json info 
+-[ ] We need to work on querying CB with transaction IDs to get current info (specifically, updates on amount purchased)
 - [ ] research constant price feeds for active trading (websocket?)
 - [ ] grid trading script?
 - [ ] EMA/SMA script?
