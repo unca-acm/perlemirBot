@@ -7,12 +7,6 @@ import sys
 import schedule
 from botclass import bot
 
-#pseudocode:
-#    receive amount to deposit
-#    receive frequency of deposit
-#    make bot object
-#    make it work
-
 #trying to use inheritance here
 class automatedDepositBot(bot):
     def __init__(self, dayOfWeek, amount, paymentMethodIndex):
@@ -77,22 +71,9 @@ class automatedDepositBot(bot):
             print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD every {self.frequency} days")
             job=self.triggerDeposit
             #schedule.every().(self.dayOfWeek).(self.frequency).days.do(job)
+            #TODO: save response in JSON
+
 
 #todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
 
-#get primary payment method ID
-#paymentMethods = (myBot.apiClient.get_payment_methods())
-
-#print(paymentMethods)
-#primaryMethodID = paymentMethods[0]['id']
-#print(f'primary method id is {primaryMethodID}')
-
-#TODO: insert logic for frequency
-
-#this does the actual deposit:
-#response = myBot.apiClient.deposit(10, 'USD', primaryMethodID)
-#print(response)
-#TODO: save response in JSON
-
-
-#todo list: scheduling, payment method id return function
+#TODO: insert logic for frequency - determine how user enters the frequency and what interval, and then how to create that call to the scheduler.

@@ -11,35 +11,33 @@ apiKey = cfg.api['API_KEY']
 apiSecret = cfg.api['API_SECRET']
 apiPassphrase =cfg.api['API_PASSPHRASE']
 sandbox = cfg.api['SANDBOX']
+#this is actually unnecessary, as the parent bot class does this automatically. This block can be removed, leaving now for posterity.
 
-#make a new bot object ()
+
+#make a new generic bot object ()
 myBot = botclass.bot()
-#perhaps grab these params from the config file directly - using local variables is superfluous?
-
-#myBot.purchase(5, 'BTC')
-#.purchase doesn't do anything, was just test method.
 
 print(myBot)
 #toString test.
 
+myBot.purchase(5, 'BTC')
+#purchase doesn't do anything, was is just a silly debug test method.
+
+#test purchasing BTC, selling BTC
+#Remember $10 minimum! Will give error and append that error to our json is not enough money to make the purchase.
 myBot.marketBuy(10, 'BTC-USD')
 myBot.marketBuy(10, 'BTC-USD')
 myBot.marketSell(10, 'BTC-USD')
-print(myBot.getApikey())
-
-#For testing: this will give an error in sandbox mode because I can't seem to get funds deposited from fake bank account.
-#That error will be appended to the marketBuys.json file.
-#if no error, the transaction details get appended.
-#$10 minimum!
+#todo: the json files for these two methods (buy and sell) have diferent formatting. Make them consistent.
 
 #now testing automateDeposit bot, which is child of botclass bot (inherits all of its methods etc)
 depositBot = automatedDepositBot(10, 10, 0)
-#consideration: the automatedDeposit bot will get the apikey from config file in order to call the parent bot constructor
-#the parent bot constructor needs these as params
-#perhaps make this consistent between the two?
-
-print('testing working branch')
-#print(depositBot.getChosenPaymentMethodID())
-#this is giving an error and need to debug
-
-#print(depositBot.triggerDeposit())
+#test get entire array of payment methods
+print(depositBot.getAllPaymentMethods())
+#test get chosen method's ID
+myid = depositBot.getChosenPaymentMethodID()
+print(myid)
+#test make the deposit
+print(depositBot.triggerDeposit(myid))
+#This is giving a "user login required" error, unsure why
+#todo look into this error! Not sure if account specific, or problem with code logic.

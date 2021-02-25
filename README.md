@@ -10,30 +10,14 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 
 ## Current Status
 
-This project is in its infancy. Stay tuned.
+Goal is for MVP to be finished by Friday, March 5. MVP means automatedDeposit and automatedBuy, so that we can enable DCA investing. After the MVP is functional, we will begin work on more dynamic trading bots.
 
 ## Project TODO
-- [ ] Create header file for all imports (not sure anymore this is necessary)
-- [ ] Research callbacks / periodic executions (alex - looking into 'schedule' library)
-- [ ] bot class object getters: ALAN & ELIAS
-  
-    -[ ] Account ID
-     
-    -[ ] primary funding account
-     
-    -[ ] API privileges 
-     
-    -[ ] Wallets
-  
-- [ ] bot class object Setters:
-     
-  -[ ] TBD
-  
-- [ ] bot class object: buy/sell
-- [ ] bot class object: json writing/reading (saving and reading transaction ID data) (use uuid)
- -[ ] determine data/file structure for storing json info
-- [ ] automated deposit script
-- [ ] DCA automated buys script
+- [ ] Finish automatedBuy bot
+- [ ] Collaborate with API team on json data transferring and transactionID queries
+- [ ] Finish figuring out payment methods for deposit (perhaps requires non-sandbox testing)
+- [ ] For both current bot projects, figure out 'schedule' library, and determine what increment we want to use and/or allow
+ -[ ] determine file structure and naming convention for storing json info 
 - [ ] research constant price feeds for active trading (websocket?)
 - [ ] grid trading script?
 - [ ] EMA/SMA script?
@@ -67,7 +51,6 @@ Libraries needed:
 ## API reference
 
 TBD
-
 
 
 ## Notes on Usage
