@@ -57,11 +57,8 @@ class automatedDepositBot(bot):
     def getChosenPaymentMethodID(self):
         'returns chosen payment method ID'
         allMethods = self.getAllPaymentMethods
-        myIndex = int(self.paymentMethodIndex)
-        myMethodObject = allMethods[myIndex]
-        return myMethodObject['id']
-
-        #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
+        objectMethods = allMethods()
+        return objectMethods[self.paymentMethodIndex]['id']
 
     def triggerDeposit(self, paymentMethodID):
         '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
