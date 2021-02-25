@@ -35,21 +35,15 @@ https://public.sandbox.pro.coinbase.com/
 
 Note about sandbox: you can't deposit funds from fake bank account, but you *can* import funds from the fake coinbase account (click "Trade", go to BTC-USD, select "deposit" > *"USD" > "Coinbase.com")
 
-## Related 
-~~~~
+## Related
 We have a webdev team creating a front end dashboard, in addition to a team creating an internal API.
 
 ## Tech Stack/Requirements
 
 These scripts will be written in python3.
-
-Libraries needed:
- - cbpro
- - requests
-
+All necessary libraries are included in the provided virtual environment.
 
 ## API reference
-
 TBD
 
 
