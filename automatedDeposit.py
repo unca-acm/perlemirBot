@@ -7,7 +7,7 @@ import sys
 import schedule
 from botclass import bot
 
-#trying to use inheritance here
+#automatedDeposit is a child class, inherits 'bot' methods.
 class automatedDepositBot(bot):
     def __init__(self, dayOfWeek, amount, paymentMethodIndex):
         super().__init__()
@@ -15,8 +15,8 @@ class automatedDepositBot(bot):
         self.amount = amount
         self.paymentMethodIndex = paymentMethodIndex
         #TODO: add check here to make sure amount is > 10
-        #also add a check to make sure API config file is correct
-        #perhaps here is also a good place to query API and make sure the account is active and has privileges.
+        #todo: perhaps add check to make sure this API key has deposit privileges
+        #todo: amount needs to be >$10, add check here?
 
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
@@ -30,6 +30,7 @@ class automatedDepositBot(bot):
     def setDayOfWeek(self, newDay):
         '''setter for automated deposit frequency'''
         self.dayOfWeek = newDay
+        #todo: are we using day of week, or other frequency? Make sure this is consistent.
 
     def getDayOfWeek(self):
         '''getter for automated deposit amount'''
@@ -54,13 +55,10 @@ class automatedDepositBot(bot):
         objectMethods = allMethods()
         return objectMethods[self.paymentMethodIndex]['id']
 
-        #Perhaps list them all here since this is parent class, then give option to choose which one to use for each child bot?
-
     def triggerDeposit(self, paymentMethodID):
         '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
         #Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.
         paymentMethodID = self.getAllPaymentMethods()[self.paymentMethodIndex]['id']
-        #this line of code needs to be tested,
 
         retStatement = self.apiClient.deposit(self.amount, 'USD', paymentMethodID)
         #todo: record the return into a json
