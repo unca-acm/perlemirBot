@@ -32,7 +32,7 @@ class automatedBuy(bot):
         self.frequency = newFreq
 
     def getFrequency(self):
-        '''setter for frequency'''
+        '''getter for frequency'''
         return self.frequency
 
     def getPairing(self):
