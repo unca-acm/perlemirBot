@@ -62,8 +62,7 @@ class bot:
         allPaymentMethods = (self.apiClient.get_payment_methods())
         return allPaymentMethods
         #For automated deposits, we will need user to tell us which method to use
-        #Once we are returned the index, we can establish the ID ourselves.
-        # todo: The API will call this method, list them all by name, and pass the chosen paymentMethod index as param in order to make the automatedDeposit bot.
+        # todo: The API will call this method (on a temp bot?), list all payment methods by name, and pass the chosen paymentMethodID as param in order to make the automatedDeposit bot.
 
     #Actions
 

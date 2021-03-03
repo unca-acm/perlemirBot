@@ -11,19 +11,21 @@ from botclass import bot
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedDepositBot(bot):
-    def __init__(self, dayOfWeek, amount, paymentMethodIndex):
+    def __init__(self, dayOfWeek, amount, paymentMethodID):
         super().__init__()
         self.dayOfWeek = dayOfWeek
         # days of week are enumerated, 0-6, Sun - Sat, Respectively
         self.amount = amount
-        self.paymentMethodIndex = paymentMethodIndex
+        self.paymentMethodID = paymentMethodID
+#        self.paymentMethodID = self.getChosenPaymentMethodID
         #TODO: add check here to make sure amount is > 10
         #todo: perhaps add check to make sure this API key has deposit privileges
         #todo: amount needs to be >$10, add check here?
+        #todo: API has to query list of payment methods first so that we can pass the ID of the method as param
 
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
-        self.amount =newAmount
+        self.amount = newAmount
         #todo: add check to make sure amount is > 10
 
     def getAmount(self):
@@ -42,26 +44,26 @@ class automatedDepositBot(bot):
         '''getter for automated deposit amount'''
         return self.amount
 
-    def getPaymentMethodIndex(self):
-        '''getter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
-        '''to get the actual info for this payment method, you need to call: self.getAllPaymentMethods()[self.paymentMethodIndex]'''
-        return self.paymentMethodIndex
+    def getPaymentMethodID(self):
+        '''getter for payment method ID'''
+        return self.paymentMethodID
 
-    def setPaymentMethodIndex(self, newPaymentMethodIndex):
-        '''setter for payment method. The paymentMethod variable is the INDEX of the entire array of possible payment methods on the account.'''
-        self.paymentMethodIndex = newPaymentMethodIndex
+    def setPaymentMethod(self, newPaymentMethodID):
+        '''setter for payment method ID. Need to query account for all of these.'''
+        #todo: this is old code but keeping for posterity. We were using index of payment method arrays, now we are using ID directly
+        #allMethods = self.getAllPaymentMethods
+        #objectMethods = allMethods()
+        #self.paymentMethodID = objectMethods[self.paymentMethodIndex]['id']
+        self.paymentMethodID = newPaymentMethodID
+        #return self.paymentMethodID
 
     def getChosenPaymentMethodID(self):
-        'returns chosen payment method ID'
-        allMethods = self.getAllPaymentMethods
-        objectMethods = allMethods()
-        return objectMethods[self.paymentMethodIndex]['id']
+        '''returns chosen payment method ID'''
+        return self.paymentMethodID
 
-    def triggerDeposit(self, paymentMethodID):
-        '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
-        #Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.
-        paymentMethodID = self.getAllPaymentMethods()[self.paymentMethodIndex]['id']
-        retStatement = self.apiClient.deposit(self.amount, 'USD', paymentMethodID)
+    def triggerDeposit(self):
+        '''makes a deposit. paymentMethodID is the ID of the payment method'''
+        retStatement = self.apiClient.deposit(self.amount, 'USD', self.paymentMethodID)
         #todo: record the return into a json
         return retStatement
 
