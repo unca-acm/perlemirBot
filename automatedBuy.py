@@ -60,7 +60,7 @@ class automatedBuy(bot):
         while self.isActive:
             print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
             #todo: change this print statement to reflect accurate frequency
-            job=self.triggerDeposit
+            job=self.triggerBuy
             #TODO: save response in JSON (probably not necessary, happens inside marketBuy)
             schedule.every(self.frequency).days.at(self.timeToRun).do(job)
             #todo: test that this syntax will work
