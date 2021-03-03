@@ -14,6 +14,7 @@ class automatedDepositBot(bot):
     def __init__(self, dayOfWeek, amount, paymentMethodIndex):
         super().__init__()
         self.dayOfWeek = dayOfWeek
+        # days of week are enumerated, 0-6, Sun - Sat, Respectively
         self.amount = amount
         self.paymentMethodIndex = paymentMethodIndex
         #TODO: add check here to make sure amount is > 10
@@ -32,7 +33,6 @@ class automatedDepositBot(bot):
     def setDayOfWeek(self, newDay):
         '''setter for automated deposit frequency'''
         self.dayOfWeek = newDay
-        #todo: are we using day of week, or other frequency? Make sure this is consistent.
 
     def getDayOfWeek(self):
         '''getter for automated deposit amount'''
@@ -61,19 +61,19 @@ class automatedDepositBot(bot):
         '''makes a deposit. paymentMethodID is the ID of the method, not the INDEX of all payment methods.'''
         #Before/when this method is called, seek into the array of paymentMethods using the index given this bot, and find the [id] key pairing to get this.
         paymentMethodID = self.getAllPaymentMethods()[self.paymentMethodIndex]['id']
-
         retStatement = self.apiClient.deposit(self.amount, 'USD', paymentMethodID)
         #todo: record the return into a json
         return retStatement
 
     def run(self):
         while self.isActive:
-            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD every {self.frequency} days")
+            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on the selected day of the week, at 1AM")
             job=self.triggerDeposit
-            #schedule.every().(self.dayOfWeek).(self.frequency).days.do(job)
             #TODO: save response in JSON
-
+            #TODO: add a switch here. The switch will determine which schedule call based upon the day of thr week (which is enumerated 0-6)
+            # schedule.every().wednesday.at("01:00").do(job)
+            # schedule.every().thursday.at("01:00").do(job)
+            #etc
 
 #todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
 
-#TODO: insert logic for frequency - determine how user enters the frequency and what interval, and then how to create that call to the scheduler.

@@ -11,12 +11,20 @@ from botclass import bot
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
-    def __init__(self, frequency, fiatAmount, pairing):
+    def __init__(self, frequency, timeToRun, fiatAmount, pairing):
         super().__init__()
         self.amount = fiatAmount
-        self.frequency = frequency
-        self.pairing = pairing
-        #pairing is'BTC-USD' or 'ETH-USD' etc.
+        self.frequency = frequency   #run every X days
+        self.pairing = pairing     #pairing is'BTC-USD' or 'ETH-USD' etc.
+        self.timeToRun  #Military time: "10:30" format.
+
+    def getTimeToRun(self):
+        '''getter for time to run. Military time: "10:30" format. '''
+        return self.timeToRun()
+
+    def setTimeToRun(self, newTime):
+        '''setter for time to run. Military time: "10:30" format. '''
+        self.timeToRun = newTime
 
     def getFiatAmount(self):
         '''getter for automated purchase amount (in fiat)'''
@@ -48,12 +56,12 @@ class automatedBuy(bot):
         #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
         return transaction
 
-    #todo: scheduler!
-
     def run(self):
         while self.isActive:
-            print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} ")
+            print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
             #todo: change this print statement to reflect accurate frequency
             job=self.triggerDeposit
-            #schedule.every()..(self.frequency).days.do(job)
             #TODO: save response in JSON (probably not necessary, happens inside marketBuy)
+            schedule.every(self.frequency).days.at(self.timeToRun).do(job)
+            #todo: test that this syntax will work
+
