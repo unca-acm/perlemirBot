@@ -58,9 +58,9 @@ class automatedBuy(bot):
 
     def run(self):
         def job():
-            print("Automated Buy Triggered.")
+            print("Automated Buy Triggered...")
             self.triggerBuy
-            print("Automated Buy Occurred.")
+            print("...Automated Buy Occurred")
         print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
         #TODO: save response in JSON (probably not necessary, happens inside marketBuy, but double check)
         schedule.every(self.frequency).days.at(self.timeToRun).do(job)

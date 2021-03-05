@@ -81,7 +81,9 @@ class automatedDepositBot(bot):
     def run(self):
         print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
         def job():
+            print("Automated Deposit Triggered...")
             self.triggerDeposit
+            print("...Automated Deposit Occurred")
         if(self.dayOfWeek == 0):
             schedule.every().sunday.at("01:00").do(job)
         elif(self.dayOfWeek==1):

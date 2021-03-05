@@ -17,13 +17,13 @@ print(myBot)
 # toString test.
 
 # test market buy/sell BTC, selling BTC, 2x each
-# $10 minimum. Will give error and append that error to our json if there is not enough money to make the purchase.
 myBot.marketBuy(10, 'BTC-USD')
 myBot.marketBuy(10, 'BTC-USD')
 myBot.marketSell(10, 'BTC-USD')
 myBot.marketSell(10, 'BTC-USD')
 
 print(myBot.getAllPaymentMethods())
+#printing these for use later.
 
 #todo: test all other additional myBot methods here:
 #todo
@@ -37,27 +37,26 @@ print(myBot.getAllPaymentMethods())
 autoDepTester = automatedDepositBot(0, 10, 'b22911ee-ef35-5c97-bdd4-aef3f65618d9')
 
 autoDepTester.run()
-
+#todo: these "run()" functions have a while loop.
+# talk to API team and see if they can cancel the func
+# otherwise, they can just set isActive=False and trigger wont happen. But loop keeps running.
 
 print(autoDepTester.triggerDeposit())
-# todo: This is giving a "user login required" error.
-# todo: I think this means user needs to reconnect bank via the coinbase UI
-# todo look into this error: I think this will work outside sandbox mode
+#todo: This is giving a "user login required" error.
+# I think this means user needs to reconnect bank via the coinbase UI
+# I think this will work outside sandbox mode
 
-# todo: test all other methods for bugs. It's mostly just getters/setters.
+#todo: test all other methods for bugs. It's mostly just getters/setters.
 
 
 
 # ~~~~Testing automatedBuy~~~~
 
 buybotTest = automatedBuy(1, "22:27", 10, 'BTC-USD')
-#buy $10 BTC every 2 days at 5am
+# create bot to buy $10 BTC every 1 days at 22:27
 
 #todo: test all other methods for hidden bugs (mostly getters/setters)
 
 buybotTest.run()
 
 print(buybotTest.triggerBuy())
-
-#print(buybot)
-#print(buybot.triggerBuy())
