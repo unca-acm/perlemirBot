@@ -79,26 +79,28 @@ class automatedDepositBot(bot):
         return switcher.get(arg, "invalid day enumeration")
 
     def run(self):
-        dayString = self.numberToDay(self.dayOfWeek)
-        print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {dayString} at 1AM")
-        if self.isActive:
-            def job():
-                self.triggerDeposit
-            if(self.dayOfWeek == 0):
-                schedule.every().sunday.at("01:00").do(job)
-            elif(self.dayOfWeek==1):
-                schedule.every().monday.at("01:00").do(job)
-            elif (self.dayOfWeek == 2):
-                    schedule.every().tuesday.at("01:00").do(job)
-            elif (self.dayOfWeek == 3):
-                    schedule.every().wednesday.at("01:00").do(job)
-            elif(self.dayOfWeek==4):
-                schedule.every().thursday.at("01:00").do(job)
-            elif (self.dayOfWeek == 5):
-                schedule.every().friday.at("01:00").do(job)
-            elif (self.dayOfWeek == 6):
+        print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
+        def job():
+            self.triggerDeposit
+        if(self.dayOfWeek == 0):
+            schedule.every().sunday.at("01:00").do(job)
+        elif(self.dayOfWeek==1):
+            schedule.every().monday.at("01:00").do(job)
+        elif (self.dayOfWeek == 2):
+                schedule.every().tuesday.at("01:00").do(job)
+        elif (self.dayOfWeek == 3):
+                schedule.every().wednesday.at("01:00").do(job)
+        elif(self.dayOfWeek==4):
+            schedule.every().thursday.at("01:00").do(job)
+        elif (self.dayOfWeek == 5):
+            schedule.every().friday.at("01:00").do(job)
+        elif (self.dayOfWeek == 6):
                 schedule.every().saturday.at("01:00").do(job)
-
+        while(self.isActive == True): #this keeps the script running continuously.
+            schedule.run_pending()  #run any job that is pending (jobs go to "pending" when their chosen time occurs)
+            #todo: we can consider adding "sleep" here to save resources.
+            # For instance, we can sleep for an hour here. Any task that becomes pending within the hour gets performed
+        #todo: this might catch in infinite loop. Discuss with API team.
 
 #todo: maybe add a way to return the time that next deposit will occur.
 

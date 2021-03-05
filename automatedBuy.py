@@ -57,11 +57,17 @@ class automatedBuy(bot):
         return transaction
 
     def run(self):
-        if self.isActive:
-            def job():
-                self.triggerDeposit
-            print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
-            #TODO: save response in JSON (probably not necessary, happens inside marketBuy, but double check)
-            schedule.every(self.frequency).days.at(self.timeToRun).do(job)
+        def job():
+            print("Automated Buy Triggered.")
+            self.triggerBuy
+            print("Automated Buy Occurred.")
+        print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
+        #TODO: save response in JSON (probably not necessary, happens inside marketBuy, but double check)
+        schedule.every(self.frequency).days.at(self.timeToRun).do(job)
+        while(self.isActive == True): #this keeps the script running continuously.
+            schedule.run_pending()  #run any job that is pending (jobs go to "pending" when their chosen time occurs)
+            #todo: we can consider adding "sleep" here to save resources.
+            # For instance, we can sleep for an hour here. Any task that becomes pending within the hour gets performed
+        #todo: this might catch in infinite loop. Discuss with API team.
 
 #todo: maybe add a way to return the time that next deposit will occur.

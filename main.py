@@ -40,16 +40,17 @@ autoDepTester.run()
 
 
 print(autoDepTester.triggerDeposit())
-#todo: This is giving a "user login required" error, unsure why
-#todo look into this error: Not sure if account specific, or problem with code logic.
+# todo: This is giving a "user login required" error.
+# todo: I think this means user needs to reconnect bank via the coinbase UI
+# todo look into this error: I think this will work outside sandbox mode
 
-#todo: test all other methods for bugs. It's mostly just getters/setters.
+# todo: test all other methods for bugs. It's mostly just getters/setters.
 
 
 
 # ~~~~Testing automatedBuy~~~~
 
-buybotTest = automatedBuy(2, "05:00", 10, 'BTC-USD')
+buybotTest = automatedBuy(1, "22:27", 10, 'BTC-USD')
 #buy $10 BTC every 2 days at 5am
 
 #todo: test all other methods for hidden bugs (mostly getters/setters)
