@@ -14,19 +14,17 @@ class automatedDepositBot(bot):
     def __init__(self, dayOfWeek, amount, paymentMethodID):
         super().__init__()
         self.dayOfWeek = dayOfWeek
-        # days of week are enumerated, 0-6, Sun - Sat, Respectively
+        # dayOfWeek is enumerated: 0-6 = Sun - Sat, Respectively
         self.amount = amount
         self.paymentMethodID = paymentMethodID
-#        self.paymentMethodID = self.getChosenPaymentMethodID
         #TODO: add check here to make sure amount is > 10
         #todo: perhaps add check to make sure this API key has deposit privileges
-        #todo: amount needs to be >$10, add check here?
-        #todo: API has to query list of payment methods first so that we can pass the ID of the method as param
 
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
         self.amount = newAmount
         #todo: add check to make sure amount is > 10
+        #todo: Alternatively, batch.
 
     def getAmount(self):
         '''getter for automated deposit amount'''
@@ -67,7 +65,7 @@ class automatedDepositBot(bot):
         #todo: record the return into a json
         return retStatement
 
-    def numberToDay(argument):
+    def numberToDay(self, arg):
         switcher = {
             0: "Sunday",
             1: "Monday",
@@ -78,29 +76,29 @@ class automatedDepositBot(bot):
             6: "Saturday",
             7: "Sunday",
         }
-        func = switcher.get(argument)
-        return func()
+        return switcher.get(arg, "invalid day enumeration")
 
     def run(self):
-        while self.isActive:
-            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
-            job = self.triggerDeposit
+        dayString = self.numberToDay(self.dayOfWeek)
+        print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {dayString} at 1AM")
+        if self.isActive:
+            def job():
+                self.triggerDeposit
             if(self.dayOfWeek == 0):
-                schedule.every().Sunday.at("01:00").do(job)
+                schedule.every().sunday.at("01:00").do(job)
             elif(self.dayOfWeek==1):
-                schedule.every().Monday.at("01:00").do(job)
+                schedule.every().monday.at("01:00").do(job)
             elif (self.dayOfWeek == 2):
-                    schedule.every().Tuesday.at("01:00").do(job)
+                    schedule.every().tuesday.at("01:00").do(job)
             elif (self.dayOfWeek == 3):
-                    schedule.every().Wednesday.at("01:00").do(job)
+                    schedule.every().wednesday.at("01:00").do(job)
             elif(self.dayOfWeek==4):
-                schedule.every().Thursday.at("01:00").do(job)
+                schedule.every().thursday.at("01:00").do(job)
             elif (self.dayOfWeek == 5):
-                schedule.every().Friday.at("01:00").do(job)
+                schedule.every().friday.at("01:00").do(job)
             elif (self.dayOfWeek == 6):
-                schedule.every().Saturday.at("01:00").do(job)
-            #TODO: save response in JSON
+                schedule.every().saturday.at("01:00").do(job)
 
 
-#todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
+#todo: maybe add a way to return the time that next deposit will occur.
 

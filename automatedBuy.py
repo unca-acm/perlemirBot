@@ -1,6 +1,6 @@
 #Automated Buys
 
-#todo remove unnecessary imports?
+#todo remove unnecessary imports? Maybe look into header file?
 import apiconfig as cfg
 import cbpro
 import json
@@ -13,10 +13,10 @@ from botclass import bot
 class automatedBuy(bot):
     def __init__(self, frequency, timeToRun, fiatAmount, pairing):
         super().__init__()
-        self.amount = fiatAmount
+        self.fiatAmount = fiatAmount
         self.frequency = frequency   #run every X days
         self.pairing = pairing     #pairing is'BTC-USD' or 'ETH-USD' etc.
-        self.timeToRun  #Military time: "10:30" format.
+        self.timeToRun = timeToRun  #Military time: "10:30" format.
 
     def getTimeToRun(self):
         '''getter for time to run. Military time: "10:30" format. '''
@@ -52,16 +52,16 @@ class automatedBuy(bot):
 
     def triggerBuy(self):
         '''this is the method that the scheduler library will call to perform desired action'''
-        transaction = self.marketBuy(self.amount, self.pairing)
+        transaction = self.marketBuy(self.fiatAmount, self.pairing)
         #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
         return transaction
 
     def run(self):
-        while self.isActive:
+        if self.isActive:
+            def job():
+                self.triggerDeposit
             print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
-            #todo: change this print statement to reflect accurate frequency
-            job=self.triggerBuy
-            #TODO: save response in JSON (probably not necessary, happens inside marketBuy)
+            #TODO: save response in JSON (probably not necessary, happens inside marketBuy, but double check)
             schedule.every(self.frequency).days.at(self.timeToRun).do(job)
-            #todo: test that this syntax will work
 
+#todo: maybe add a way to return the time that next deposit will occur.

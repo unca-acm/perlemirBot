@@ -52,43 +52,30 @@ class bot:
             self.apiSecret = apisecret
             self.apiPass = apipass
 
-    #perhaps having this method is bad security, remove later?
-    #todo consider leaving or removing this. If leading, need setters for all the other API credentials also.
-    def getApikey(self):
-        return self.apiKey
-
     def getAllPaymentMethods(self):
         'Returns array of all payment methods'
         allPaymentMethods = (self.apiClient.get_payment_methods())
         return allPaymentMethods
-        #For automated deposits, we will need user to tell us which method to use
-        # todo: The API will call this method (on a temp bot?), list all payment methods by name, and pass the chosen paymentMethodID as param in order to make the automatedDeposit bot.
+        #Note: For automated deposits, we will need user to tell us which of these methods to use
+        #The internal API will call this method (on a temp bot?), list all payment methods by name, and pass the chosen paymentMethodID as param in order to make the automatedDeposit bot.
 
     #Actions
-
-    #make purchase
-    def purchase(self, amount, currency):
-        '''this method currently does nothing, just a silly debug code'''
-        print('purchase made so coin much wow')
-        print( f'in theory you just purchased {amount} worth of {currency}, but not really.')
 
     def marketBuy(self, USDValue, pairing):
         '''place market buy, writes the return to file'''
         thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
                                           side='buy',
-                                          funds=USDValue) #could also use "size" to specify BTC amount
+                                          funds=USDValue) #could also use "size" to specify BTC amount, whereas 'funds' = fiat
         #add details of this buy to our json file
         #establish filename
         marketBuysJsonFile = str(self.uuid) + '_marketbuys.json'
-        #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
+        #todo Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
         #if file doesnt exist, create it with this as first entry
         if not os.path.isfile(marketBuysJsonFile):
-            #print(f"debug: making file {marketBuysJsonFile}")
             marketbuys={'market_buys': [thisOrderReturn]}
             write_json(marketbuys, marketBuysJsonFile)
         #else, append this entry
         else:
-            #print(f"debug: file exists")
             f = open(marketBuysJsonFile)
             data = json.load(f)
             temp=data['market_buys']
@@ -103,11 +90,10 @@ class bot:
                                           funds=USDValue) #could also use "size" to specify BTC amount
         jsonFilename = str(self.uuid) + '_marketSells.json'
         #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
-        #if file doesnt exist, create it with this as first entry
+        #if file doesnt exist, create it with this as first entry, else create it
         if not os.path.isfile(jsonFilename):
             data={'market_sells': [thisOrderReturn]}
             write_json(data, jsonFilename)
-        #else, append this entry
         else:
             f = open(jsonFilename)
             data = json.load(f)
