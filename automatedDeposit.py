@@ -67,15 +67,40 @@ class automatedDepositBot(bot):
         #todo: record the return into a json
         return retStatement
 
+    def numberToDay(argument):
+        switcher = {
+            0: "Sunday",
+            1: "Monday",
+            2: "Tuesday",
+            3: "Wednesday",
+            4: "Thursday",
+            5: "Friday",
+            6: "Saturday",
+            7: "Sunday",
+        }
+        func = switcher.get(argument)
+        return func()
+
     def run(self):
         while self.isActive:
-            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on the selected day of the week, at 1AM")
-            job=self.triggerDeposit
+            print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
+            job = self.triggerDeposit
+            if(self.dayOfWeek == 0):
+                schedule.every().Sunday.at("01:00").do(job)
+            elif(self.dayOfWeek==1):
+                schedule.every().Monday.at("01:00").do(job)
+            elif (self.dayOfWeek == 2):
+                    schedule.every().Tuesday.at("01:00").do(job)
+            elif (self.dayOfWeek == 3):
+                    schedule.every().Wednesday.at("01:00").do(job)
+            elif(self.dayOfWeek==4):
+                schedule.every().Thursday.at("01:00").do(job)
+            elif (self.dayOfWeek == 5):
+                schedule.every().Friday.at("01:00").do(job)
+            elif (self.dayOfWeek == 6):
+                schedule.every().Saturday.at("01:00").do(job)
             #TODO: save response in JSON
-            #TODO: add a switch here. The switch will determine which schedule call based upon the day of thr week (which is enumerated 0-6)
-            # schedule.every().wednesday.at("01:00").do(job)
-            # schedule.every().thursday.at("01:00").do(job)
-            #etc
+
 
 #todo: maybe add a way to return the time that next deposit will occur. Maybe look into the Schedule library and see if this is built in?
 
