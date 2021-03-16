@@ -34,14 +34,14 @@ print(myBot.getAllPaymentMethods())
 # ~~~~Testing automatedDeposit bot ~~~~
 #creating auto deposit bot for testing.
 #the payment ID parameter is hardcoded in for testing. Got it (manually) from the myBot.getAllPaymentMethods call.
-autoDepTester = automatedDepositBot(0, 10, 'b22911ee-ef35-5c97-bdd4-aef3f65618d9')
+#autoDepTester = automatedDepositBot(0, 10, 'b22911ee-ef35-5c97-bdd4-aef3f65618d9')
 
-autoDepTester.run()
+#autoDepTester.run()
 #todo: these "run()" functions have a while loop.
 # talk to API team and see if they can cancel the func
 # otherwise, they can just set isActive=False and trigger wont happen. But loop keeps running.
 
-print(autoDepTester.triggerDeposit())
+#print(autoDepTester.triggerDeposit())
 #todo: This is giving a "user login required" error.
 # I think this means user needs to reconnect bank via the coinbase UI
 # I think this will work outside sandbox mode
@@ -52,11 +52,10 @@ print(autoDepTester.triggerDeposit())
 
 # ~~~~Testing automatedBuy~~~~
 
-buybotTest = automatedBuy(1, "22:27", 10, 'BTC-USD')
-# create bot to buy $10 BTC every 1 days at 22:27
-
+buybotTest = automatedBuy(7, 22, 10, 'BTC-USD')
+# create bot to buy $10 BTC every 7 days at 22:00
 #todo: test all other methods for hidden bugs (mostly getters/setters)
 
 buybotTest.run()
 
-print(buybotTest.triggerBuy())
+#print(buybotTest.triggerBuy())

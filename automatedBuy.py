@@ -8,23 +8,31 @@ import botclass
 import sys
 import schedule
 from botclass import bot
+import time
+from daemon import runner
+from apscheduler.schedulers.background import BackgroundScheduler
+import apscheduler
+
+
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
     def __init__(self, frequency, timeToRun, fiatAmount, pairing):
         super().__init__()
         self.fiatAmount = fiatAmount
-        self.frequency = frequency   #run every X days
+        self.frequency = frequency   #run every X days (starting on time the bot is created)
         self.pairing = pairing     #pairing is'BTC-USD' or 'ETH-USD' etc.
-        self.timeToRun = timeToRun  #Military time: "10:30" format.
+        self.timeToRun = timeToRun  #User chooses an hour, Military time: 0-23. Buy happens on the hour.
+        self.sched = BackgroundScheduler(daemon=True)
 
     def getTimeToRun(self):
-        '''getter for time to run. Military time: "10:30" format. '''
+        '''getter for time to run. Military time: 0-23'''
         return self.timeToRun()
 
     def setTimeToRun(self, newTime):
-        '''setter for time to run. Military time: "10:30" format. '''
+        '''setter for time to run. Military time: 0-23 '''
         self.timeToRun = newTime
+        # Todo: check that input is within 0-23
 
     def getFiatAmount(self):
         '''getter for automated purchase amount (in fiat)'''
@@ -56,18 +64,21 @@ class automatedBuy(bot):
         #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
         return transaction
 
-    def run(self):
-        def job():
-            print("Automated Buy Triggered...")
-            self.triggerBuy
-            print("...Automated Buy Occurred")
-        print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}")
-        #TODO: save response in JSON (probably not necessary, happens inside marketBuy, but double check)
-        schedule.every(self.frequency).days.at(self.timeToRun).do(job)
-        while(self.isActive == True): #this keeps the script running continuously.
-            schedule.run_pending()  #run any job that is pending (jobs go to "pending" when their chosen time occurs)
-            #todo: we can consider adding "sleep" here to save resources.
-            # For instance, we can sleep for an hour here. Any task that becomes pending within the hour gets performed
-        #todo: this might catch in infinite loop. Discuss with API team.
 
-#todo: maybe add a way to return the time that next deposit will occur.
+    def run(self):
+        '''initiate the bot to start running'''
+        #define our job.
+        def job():
+            if self.isActive == True:
+                print("Automated Buy Triggered...")
+                self.triggerBuy
+                print("...Automated Buy Occurred")
+            else:
+                print("Scheduled time has arrived, however Bot is currently not Active.")
+
+        self.sched.add_job(job, 'cron', hour=self.timeToRun, day=self.frequency)
+        self.sched.add_job(lambda: self.sched.print_jobs(), 'interval', seconds=5)   #this prints current jobs ever 5 seconds. Used for debugging
+        self.sched.start()
+        print(f"Automated Buy sequence initiated. Will purchase {self.fiatAmount} in fiat worth of {self.pairing} every {self.frequency} days at {self.timeToRun}:00")
+
+
