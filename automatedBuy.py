@@ -12,7 +12,7 @@ import time
 from daemon import runner
 from apscheduler.schedulers.background import BackgroundScheduler
 import apscheduler
-
+import daemon
 
 
 #automatedDeposit is a child class, inherits 'bot' methods.

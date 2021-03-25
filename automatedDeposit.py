@@ -97,7 +97,9 @@ class automatedDepositBot(bot):
         elif (self.dayOfWeek == 5):
             schedule.every().friday.at("01:00").do(job)
         elif (self.dayOfWeek == 6):
-                schedule.every().saturday.at("01:00").do(job)
+            schedule.every().saturday.at("01:00").do(job)
+
+        #todo: change scheduler, don't use while loop
         while(self.isActive == True): #this keeps the script running continuously.
             schedule.run_pending()  #run any job that is pending (jobs go to "pending" when their chosen time occurs)
             #todo: we can consider adding "sleep" here to save resources.

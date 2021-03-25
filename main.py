@@ -4,6 +4,7 @@ import apiconfig as cfg
 import botclass
 from automatedDeposit import automatedDepositBot
 from automatedBuy import automatedBuy
+import daemon
 
 print('The taxation of trade routes to outlaying star systems is in dispute.')
 
@@ -56,6 +57,8 @@ buybotTest = automatedBuy(7, 22, 10, 'BTC-USD')
 # create bot to buy $10 BTC every 7 days at 22:00
 #todo: test all other methods for hidden bugs (mostly getters/setters)
 
-buybotTest.run()
+#API team will be calling the run() method as a daemon maybe?
+with daemon.DaemonContext():
+    buybotTest.run()
 
 #print(buybotTest.triggerBuy())
