@@ -16,7 +16,8 @@ from botclass import bot
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedDepositBot(bot):
-    def __init__(self, dayOfWeek, amount, paymentMethodID):
+    def __init__(self, amount, dayOfWeek, paymentMethodID):
+        #NOTE: paymentMethodID needs to be established and known in order to construct this bot. Easiest way is to create a temp super 'bot' instance.
         super().__init__()
         self.dayOfWeek = dayOfWeek  # dayOfWeek is enumerated: 0-6 = Mon - Sun, Respectively
         self.amount = amount
@@ -80,7 +81,7 @@ class automatedDepositBot(bot):
         return retStatement
 
     def numberToDay(self, arg):
-        '''This is just used for pretty print. Not necessary for code to function. '''
+        '''This is just used for pretty printing. Not necessary for code to function. '''
         switcher = {
             0: "Sunday",
             1: "Monday",
@@ -108,6 +109,11 @@ class automatedDepositBot(bot):
             return(self.currentJob.next_run_time)
         else:
             return None
+
+    def killBot(self):
+        '''cancels the scheduler'''
+        #todo: not sure if this is necessary - need to test if this automatically happens when API deletes the bot object. Just here as reminder to test later.
+        self.sched.shutdown()
 
     def run(self):
         def job():

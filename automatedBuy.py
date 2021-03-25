@@ -18,7 +18,7 @@ import daemon
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
-    def __init__(self, frequency, timeToRun, fiatAmount, pairing):
+    def __init__(self, fiatAmount, pairing, frequency, timeToRun,):
         super().__init__()
         self.fiatAmount = fiatAmount
         self.frequency = frequency   #run every X days
@@ -88,6 +88,11 @@ class automatedBuy(bot):
             return(self.currentJob.next_run_time)
         else:
             return None
+
+    def killBot(self):
+        '''cancels the scheduler'''
+        #todo: not sure if this is necessary - need to test if this automatically happens when API deletes the bot object. Just here as reminder to test later.
+        self.sched.shutdown()
 
     def run(self):
         '''initiate the bot to start running'''

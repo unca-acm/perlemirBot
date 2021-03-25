@@ -10,15 +10,14 @@ The MVP is a script that will enable DCA cryptocurrency investing. Beyond that, 
 
 ## Current Status
 
-Goal is for MVP to be finished by Friday, March 5. MVP means automatedDeposit and automatedBuy, so that we can enable DCA investing. After the MVP is functional, we will begin work on more dynamic trading bots.
+AutomatedDeposit and automatedBuy bots are built but need QA/testing. Next step is to collaborate with API team regarding instantiation of bots as daemons. 
+
 
 ## Project TODO
-- [ ] Finish automatedBuy bot
+- [ ] Collaborate with API team regarding instantiating bots as daemons.
 - [ ] Collaborate with API team on json data transferring and transactionID queries
 - [ ] Finish figuring out payment methods for deposit (perhaps requires non-sandbox testing)
-- [ ] For both current bot projects, figure out 'schedule' library, and determine what increment we want to use and/or allow
  -[ ] determine file structure and naming convention for storing json info 
--[ ] We need to work on querying CB with transaction IDs to get current info (specifically, updates on amount purchased)
 - [ ] research constant price feeds for active trading (websocket?)
 - [ ] grid trading script?
 - [ ] EMA/SMA script?
@@ -42,14 +41,19 @@ We have a webdev team creating a front end dashboard, in addition to a team crea
 ## Tech Stack/Requirements
 
 These scripts will be written in python3.
-All necessary libraries are included in the provided virtual environment.
+
+Required Libraries:
+- [ ] cbpro
+- [ ] apsched
 
 ## API reference
-TBD
+-When changing a parameter of a bot that uses scheduling, the resetJobs() func needs to be called. This is only necessary for scheduling-related changes (not for amounts, etc). 
 
+-There are some preconditions for variable ranges that are not checked in the constructor (although we do check them in the setters). It is assumed the client dashboard will make this check before passing constructor params to the bots. 
 
 ## Notes on Usage
 -Deposits and purchases both have a \$10 minimum 
+
 
 ## Licensing
 

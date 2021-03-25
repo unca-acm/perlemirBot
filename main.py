@@ -1,3 +1,6 @@
+"""
+This is a dummy main used for testing purposes only!
+"""
 import cbpro
 import json
 import apiconfig as cfg
@@ -7,7 +10,6 @@ from automatedBuy import automatedBuy
 import daemon
 
 print('The taxation of trade routes to outlaying star systems is in dispute.')
-
 
 # ~~~~Testing main bot class~~~~
 # make a new generic bot object ()
@@ -34,11 +36,11 @@ print(myBot.getAllPaymentMethods())
 # ~~~~Testing automatedDeposit bot ~~~~
 #creating auto deposit bot for testing.
 #the payment ID parameter is hardcoded in for testing. Got it (manually) from the myBot.getAllPaymentMethods call.
-autoDepTester = automatedDepositBot(0, 10, 'b22911ee-ef35-5c97-bdd4-aef3f65618d9')
+autoDepTester = automatedDepositBot(10, 3, 'b22911ee-ef35-5c97-bdd4-aef3f65618d9')
 print(autoDepTester)
 autoDepTester.run()
 autoDepTester.setAmount(15)
-#autoDepTester.resetJobs()
+autoDepTester.resetJobs()
 
 
 
@@ -53,7 +55,7 @@ autoDepTester.setAmount(15)
 
 # ~~~~Testing automatedBuy~~~~
 
-buybotTest = automatedBuy(7, 22, 10, 'BTC-USD')
+buybotTest = automatedBuy(10, 'BTC-USD', 7, 22, )
 # create bot to buy $10 BTC every 7 days at 22:00
 #todo: test all other methods for hidden bugs (mostly getters/setters)
 print(buybotTest)
