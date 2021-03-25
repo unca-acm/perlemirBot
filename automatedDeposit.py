@@ -1,4 +1,8 @@
-#this will be the script that makes automated deposits
+"""
+Automated Deposit Bot
+Utility: Makes a deposit of {X} USD from {x} paymentMethodID on {x} day of the week, every week.
+Remember to call resetJobs() whenever adjusting params that affect the scheduler.
+"""
 
 #todo remove unnecessary imports?
 import apiconfig as cfg
@@ -7,24 +11,29 @@ import json
 import botclass
 import sys
 import schedule
+from apscheduler.schedulers.background import BackgroundScheduler
 from botclass import bot
 
 #automatedDeposit is a child class, inherits 'bot' methods.
 class automatedDepositBot(bot):
     def __init__(self, dayOfWeek, amount, paymentMethodID):
         super().__init__()
-        self.dayOfWeek = dayOfWeek
-        # dayOfWeek is enumerated: 0-6 = Sun - Sat, Respectively
+        self.dayOfWeek = dayOfWeek  # dayOfWeek is enumerated: 0-6 = Mon - Sun, Respectively
         self.amount = amount
         self.paymentMethodID = paymentMethodID
-        #TODO: add check here to make sure amount is > 10
+        self.sched = BackgroundScheduler(daemon=True)
+        self.currentJob  = None # this is to have a pointer to the scheduler's job. it is used to retrieve the next run time.
+        #TODO: add check here to make sure amount is > 10, OR have that happen on dashboard side. We check it in the setter.
         #todo: perhaps add check to make sure this API key has deposit privileges
 
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
-        self.amount = newAmount
-        #todo: add check to make sure amount is > 10
-        #todo: Alternatively, batch.
+        if(newAmount <10) or (newAmount < 0) or (not isinstance(newAmount, int)):
+            print("Error, amount to deposit must be an integer >10")
+            raise Exception("newAmount must be an integer >10")
+            #todo: test this exception.
+        else:
+            self.amount = newAmount
 
     def getAmount(self):
         '''getter for automated deposit amount'''
@@ -32,7 +41,12 @@ class automatedDepositBot(bot):
 
     def setDayOfWeek(self, newDay):
         '''setter for automated deposit frequency'''
-        self.dayOfWeek = newDay
+        if(newDay < 0) or (newDay > 6) or (not isinstance(newDay, int)):
+            print("Error, new day must be an integer 0-6 inclusive")
+            raise Exception("Error, newDay must be an integer 0-6 inclusive")
+            #todo: test this exception.
+        else:
+            self.dayOfWeek = newDay
 
     def getDayOfWeek(self):
         '''getter for automated deposit amount'''
@@ -66,6 +80,7 @@ class automatedDepositBot(bot):
         return retStatement
 
     def numberToDay(self, arg):
+        '''This is just used for pretty print. Not necessary for code to function. '''
         switcher = {
             0: "Sunday",
             1: "Monday",
@@ -78,33 +93,36 @@ class automatedDepositBot(bot):
         }
         return switcher.get(arg, "invalid day enumeration")
 
-    def run(self):
-        print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
-        def job():
-            print("Automated Deposit Triggered...")
-            self.triggerDeposit
-            print("...Automated Deposit Occurred")
-        if(self.dayOfWeek == 0):
-            schedule.every().sunday.at("01:00").do(job)
-        elif(self.dayOfWeek==1):
-            schedule.every().monday.at("01:00").do(job)
-        elif (self.dayOfWeek == 2):
-                schedule.every().tuesday.at("01:00").do(job)
-        elif (self.dayOfWeek == 3):
-                schedule.every().wednesday.at("01:00").do(job)
-        elif(self.dayOfWeek==4):
-            schedule.every().thursday.at("01:00").do(job)
-        elif (self.dayOfWeek == 5):
-            schedule.every().friday.at("01:00").do(job)
-        elif (self.dayOfWeek == 6):
-            schedule.every().saturday.at("01:00").do(job)
+    def resetJobs(self):
+        '''This will remove current jobs and restart with new params'''
+        ''' You must call this every time you are changing a param that affects the schedule, such as dayOfWeek' '''
+        ''' not necessary for changing amount '''
+        print("Cancelling the following jobs:")
+        self.sched.print_jobs()
+        self.sched.shutdown()
+        print("\nRescheduling jobs:")
+        self.run()
 
-        #todo: change scheduler, don't use while loop
-        while(self.isActive == True): #this keeps the script running continuously.
-            schedule.run_pending()  #run any job that is pending (jobs go to "pending" when their chosen time occurs)
-            #todo: we can consider adding "sleep" here to save resources.
-            # For instance, we can sleep for an hour here. Any task that becomes pending within the hour gets performed
-        #todo: this might catch in infinite loop. Discuss with API team.
+    def getNextRunTime(self):
+        if(self.curentJob is not None):
+            return(self.currentJob.next_run_time)
+        else:
+            return None
+
+    def run(self):
+        def job():
+            if(self.isActive == True):
+                print("Automated Deposit Triggered...")
+                self.triggerDeposit()
+                print("...Automated Deposit Occurred")
+            else:
+                print("Scheduled time has arrived, however Bot is not currently Active.")
+        self.sched.start()
+        self.currentJob = self.sched.add_job(job, 'cron', hour='1', day_of_week=self.dayOfWeek)
+        #print(currentJob.id)
+        print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
+        self.sched.print_jobs()
+
 
 #todo: maybe add a way to return the time that next deposit will occur.
 

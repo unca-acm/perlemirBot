@@ -1,10 +1,12 @@
+"""
+This file defines 'bot' object class, which is the super class that the more specific bot types will inherit.
+"""
+
 import cbpro
 import json
 import uuid
 import os
 import apiconfig as cfg
-import daemon
-
 
 #todo: place json writes into ./json folder for all methods (this folder was added to the gitignore)
 
@@ -23,17 +25,16 @@ class bot:
         self.apiSecret = cfg.api['API_SECRET']
         self.apiPassphrase = cfg.api['API_PASSPHRASE']
         self.sandbox = cfg.api['SANDBOX']
-        if self.sandbox=='True':
-            self.api_url='https://api-public.sandbox.pro.coinbase.com/'
+        if self.sandbox == 'True':
+            self.api_url = 'https://api-public.sandbox.pro.coinbase.com/'
         else:
-            self.api_url= 'https://api.pro.coinbase.com'
+            self.api_url = 'https://api.pro.coinbase.com'
         self.apiClient = cbpro.AuthenticatedClient(self.apiKey, self.apiSecret, self.apiPassphrase, self.api_url)
-        self.uuid=uuid.uuid4()
-        self.isActive=True
+        self.uuid = uuid.uuid4()
+        self.isActive = True
     #todo: inside constructor, check that API key credentials are valid. Perhaps throw an exception if not.
 
     #Instance Methods
-
     def __str__(self):
         '''this is essentially our toString for the object.'''
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
