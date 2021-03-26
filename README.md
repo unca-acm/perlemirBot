@@ -17,7 +17,7 @@ AutomatedDeposit and automatedBuy bots are built but need QA/testing. Next step 
 - [ ] Collaborate with API team regarding instantiating bots as daemons.
 - [ ] Collaborate with API team on json data transferring and transactionID queries
 - [ ] Finish figuring out payment methods for deposit (perhaps requires non-sandbox testing)
- -[ ] determine file structure and naming convention for storing json info 
+- [ ] determine file structure and naming convention for storing json info 
 - [ ] research constant price feeds for active trading (websocket?)
 - [ ] grid trading script?
 - [ ] EMA/SMA script?
