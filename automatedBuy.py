@@ -16,7 +16,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import apscheduler
 import daemon
 
-#automatedDeposit is a child class, inherits 'bot' methods.
+# automatedDeposit is a child class, inherits 'bot' methods.
 class automatedBuy(bot):
     def __init__(self, fiatAmount, pairing, frequency, timeToRun,):
         super().__init__()
@@ -24,7 +24,7 @@ class automatedBuy(bot):
         self.frequency = frequency   #run every X days
         self.pairing = pairing     #pairing is'BTC-USD' or 'ETH-USD' etc.
         self.timeToRun = timeToRun  #User chooses an hour, Military time: 0-23. Buy happens on the hour.
-        #todo: precondition is that timeToRun is within range 0-23. We check this when the setter runs, but need to determine if we also check here, or if that check should happen on the dashboard?
+        # todo: precondition is that timeToRun is within range 0-23. We check this when the setter runs, but need to determine if we also check here, or if that check should happen on the dashboard?
         self.currentJob  = None # this is to have a pointer to the scheduler's job. it is used to retrieve the next run time.
         self.sched = BackgroundScheduler(daemon=True)
 
@@ -65,12 +65,12 @@ class automatedBuy(bot):
 
     def setPairing(self, newpair):
         self.pairing = newpair
-        #todo: discuss whether this is necessary. In theory, you probably just want to make a new bot if you want to change currency, as opposed to altering existing bot.
+        # todo: discuss whether this is necessary. In theory, you probably just want to make a new bot if you want to change currency, as opposed to altering existing bot.
 
     def triggerBuy(self):
         '''this is the method that the scheduler library will call to perform desired action'''
         transaction = self.marketBuy(self.fiatAmount, self.pairing)
-        #todo: this should record the purchase json automatically via the marketBuy method - needs testing.
+        # todo: this should record the json return automatically via marketBuy method in super class - needs testing.
         return transaction
 
     def resetJobs(self):
@@ -91,7 +91,7 @@ class automatedBuy(bot):
 
     def killBot(self):
         '''cancels the scheduler'''
-        #todo: not sure if this is necessary - need to test if this automatically happens when API deletes the bot object. Just here as reminder to test later.
+        # todo: not sure if this is necessary - need to test if this automatically happens when API deletes the bot object. Just here as reminder to test later.
         self.sched.shutdown()
 
     def run(self):

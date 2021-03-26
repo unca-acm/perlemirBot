@@ -21,15 +21,15 @@ class automatedDepositBot(bot):
         super().__init__()
         self.dayOfWeek = dayOfWeek  # dayOfWeek is enumerated: 0-6 = Mon - Sun, Respectively
         self.amount = amount
+        #TODO: add check here to make sure amount is > 10, OR have that happen on dashboard side. We check it in the setter.
         self.paymentMethodID = paymentMethodID
         self.sched = BackgroundScheduler(daemon=True)
-        self.currentJob  = None # this is to have a pointer to the scheduler's job. it is used to retrieve the next run time.
-        #TODO: add check here to make sure amount is > 10, OR have that happen on dashboard side. We check it in the setter.
+        self.currentJob = None # This is to have a global pointer to the scheduler's job. It is used to retrieve the next run time (or potentially other utility in future)
         #todo: perhaps add check to make sure this API key has deposit privileges
 
     def setAmount(self, newAmount):
         '''setter for automated deposit amount'''
-        if(newAmount <10) or (newAmount < 0) or (not isinstance(newAmount, int)):
+        if(newAmount < 10) or (newAmount < 0) or (not isinstance(newAmount, int)):
             print("Error, amount to deposit must be an integer >10")
             raise Exception("newAmount must be an integer >10")
             #todo: test this exception.
@@ -53,21 +53,21 @@ class automatedDepositBot(bot):
         '''getter for automated deposit amount'''
         return self.dayOfWeek
 
-    def getAmount(self):
-        '''getter for automated deposit amount'''
-        return self.amount
-
     def getPaymentMethodID(self):
         '''getter for payment method ID'''
         return self.paymentMethodID
 
     def setPaymentMethod(self, newPaymentMethodID):
         '''setter for payment method ID. Need to query account for all of these.'''
-        #todo: this is old code but keeping for posterity. We were using index of payment method arrays, now we are using ID directly
+        self.paymentMethodID = newPaymentMethodID
+        """
+        # Below is old code but keeping for posterity.
+        # Previously, we were selecting an index from an array of payment methods.
+        # Now, we are using ID directly (acquired elsewhere)
+        """
         #allMethods = self.getAllPaymentMethods
         #objectMethods = allMethods()
         #self.paymentMethodID = objectMethods[self.paymentMethodIndex]['id']
-        self.paymentMethodID = newPaymentMethodID
         #return self.paymentMethodID
 
     def getChosenPaymentMethodID(self):
@@ -83,21 +83,19 @@ class automatedDepositBot(bot):
     def numberToDay(self, arg):
         '''This is just used for pretty printing. Not necessary for code to function. '''
         switcher = {
-            0: "Sunday",
-            1: "Monday",
-            2: "Tuesday",
-            3: "Wednesday",
-            4: "Thursday",
-            5: "Friday",
-            6: "Saturday",
-            7: "Sunday",
+            0: "Monday",
+            1: "Tuesday",
+            2: "Wednesday",
+            3: "Thursday",
+            4: "Friday",
+            5: "Saturday",
+            6: "Sunday",
         }
         return switcher.get(arg, "invalid day enumeration")
 
     def resetJobs(self):
         '''This will remove current jobs and restart with new params'''
-        ''' You must call this every time you are changing a param that affects the schedule, such as dayOfWeek' '''
-        ''' not necessary for changing amount '''
+        ''' You must call this every time you are changing a param that affects the schedule '''
         print("Cancelling the following jobs:")
         self.sched.print_jobs()
         self.sched.shutdown()
@@ -105,17 +103,18 @@ class automatedDepositBot(bot):
         self.run()
 
     def getNextRunTime(self):
-        if(self.curentJob is not None):
-            return(self.currentJob.next_run_time)
+        if self.currentJob is not None:
+            return self.currentJob.next_run_time
         else:
             return None
 
     def killBot(self):
-        '''cancels the scheduler'''
-        #todo: not sure if this is necessary - need to test if this automatically happens when API deletes the bot object. Just here as reminder to test later.
+        '''shutdown the scheduler'''
+        #todo: not sure if this is necessary - need to test if this automatically occurs when API deletes the bot object. Just here as reminder to test later.
         self.sched.shutdown()
 
     def run(self):
+        """ Begins bot functionality: defines job, starts scheduler, adds job to schedule. """
         def job():
             if(self.isActive == True):
                 print("Automated Deposit Triggered...")
@@ -128,7 +127,3 @@ class automatedDepositBot(bot):
         #print(currentJob.id)
         print(f"Automated Deposit Bot sequence initiated. Will deposit {self.amount} USD weekly on {self.numberToDay(self.dayOfWeek)} at 1AM")
         self.sched.print_jobs()
-
-
-#todo: maybe add a way to return the time that next deposit will occur.
-

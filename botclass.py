@@ -11,7 +11,7 @@ import apiconfig as cfg
 #todo: place json writes into ./json folder for all methods (this folder was added to the gitignore)
 
 def write_json(data, filename):
-    '''this writes json. takes object 'data' and places it in 'filename'.
+    '''writes json obj to file: takes object 'data' and places it in 'filename'.
     Important: Will overwrite if 'filename' exists!'''
     with open(filename, 'w+') as f:
         json.dump(data, f, indent=4)
@@ -36,14 +36,13 @@ class bot:
 
     #Instance Methods
     def __str__(self):
-        '''this is essentially our toString for the object.'''
+        '''this is our toString for the bot object.'''
         return f"this is a bot toString. The uuid for this bot client is {self.uuid}"
 
     #Getters and Setters
 
     def setActivity(self, booleanInput):
-        '''Changes bot isActive to True or False.
-        Bots perform automated functions while isActive=True. This allows for pausing of bots without destroying/initiating new ones'''
+        '''Changes bot isActive to True or False. Bots only perform scheduled functions while isActive=True.'''
         self.isActive = booleanInput
 
     def getActivity(self):
@@ -51,12 +50,15 @@ class bot:
         return self.isActive
 
     def setApiCredentials(self, apikey, apisecret, apipass):
-            self.apiKey = apikey
-            self.apiSecret = apisecret
-            self.apiPass = apipass
+        ''' Change API credentials
+        This method is only way to change this after bot instantiation (bot does not continue to read apiconfig file)
+        '''
+        self.apiKey = apikey
+        self.apiSecret = apisecret
+        self.apiPass = apipass
 
     def getAllPaymentMethods(self):
-        'Returns array of all payment methods'
+        '''Returns array of all payment methods'''
         allPaymentMethods = (self.apiClient.get_payment_methods())
         return allPaymentMethods
         #Note: For automated deposits, we will need user to tell us which of these methods to use
@@ -88,9 +90,8 @@ class bot:
 
     def marketSell(self, USDValue, pairing):
         '''place market sale order, writes the return to file '''
-        thisOrderReturn = self.apiClient.place_market_order(product_id=pairing,
-                                          side='sell',
-                                          funds=USDValue) #could also use "size" to specify BTC amount
+        thisOrderReturn = self.apiClient.place_market_order(product_id=pairing, side='sell', funds=USDValue)
+        #could also use "size" to specify BTC/ETH amount, as opposed to "funds" for USD amount.
         jsonFilename = str(self.uuid) + '_marketSells.json'
         #Considerations: perhaps we should swap this filename and put "marketbuys" at the beginning. Or maybe store these inside a folder.
         #if file doesnt exist, create it with this as first entry, else create it
